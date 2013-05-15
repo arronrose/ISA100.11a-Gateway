@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/firmware.js"></script>
+  <script type="text/javascript" src="sql/firmwaredal.js"></script>
+  <script type="text/javascript" src="scripts/fwfilelist.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>  
+  <script type="text/javascript" src="graphics/popup.js"></script>
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitFirmwareFileListPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        	<div id="columnA">
+		    <h2>Firmware files</h2>
+		    
+
+             <table cellpadding="0" cellspacing="0" width="950px">
+              <tr>
+                <td colspan="2" align="left">
+				    <input type="button" id="btnUpload" value='Upload' class="buttonSimple" onclick="NavigateToUpload();" />
+                </td>    
+                <td colspan="4" align="right">
+					<input type="button" id="btnRefresh" value='Refresh' class="buttonSimple" onclick="Refresh();" />
+					<input type="button" id="btnBack" value='Back' class="buttonSimple" onclick="Back();" />
+                </td>
+              </tr>    
+		    </table>
+			
+			<table border="0" class="tableHeader" width="950px">
+                <tr>    
+                    <td align="left" class="labels" style="color:#FFFFFF">
+                        Items per page
+                        <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 60px;" onchange="PageNavigate(1)"> 
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+						<span id="spnTotalNoOfRows"></span> 
+                    </td>           
+                    <td align="right">   
+                        <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+                        <a id="anchorPrev">&lt;</a>&nbsp;
+                        <span id="spnPageNumber"></span>&nbsp;
+                        <a id="anchorNext">&gt;</a>&nbsp;
+                        <a id="anchorLast">&gt;&gt;</a>&nbsp;
+                    </td>
+                </tr>
+            </table>
+			
+		    <div id="tblFirmwares" style="text-align: center;"></div>
+		    		    
+		    <textarea id="firmwares_jst" style="display:none;">
+		    
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px">
+		    <tr>
+			  <td colspan="9" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<tr>								
+    					<td class="tableSubHeader" style="width:190px;" align="left">&nbsp;File Name</td>
+						<td class="tableSubHeader" style="width: 70px;" align="center">Version</td>
+						<td class="tableSubHeader" style="width:120px;" align="left">Firmware Type</td>
+						<td class="tableSubHeader" style="width:150px;" align="left">Upload Status</td>
+						<td class="tableSubHeader" style="width:170px;" align="left">Description</td>
+						<td class="tableSubHeader" style="width:150px;" align="left">Upload Date</td>
+						<td class="tableSubHeader" style="width:30px;" align="center">&nbsp;</td>
+					</tr>
+					
+                    {for f in firmwares}
+					   
+					<tr>
+						<td class="${f.cellClass}" style="width:190px;" align="left">${f.FileName}</td>
+						<td class="${f.cellClass}" style="width: 70px;" align="center">${f.VersionPopupLink}</td>
+						<td class="${f.cellClass}" style="width:120px;" align="left">${f.FirmwareTypeName}</td>
+						<td class="${f.cellClass}" style="width:150px;" align="left">${f.UploadStatusName}</td>
+						<td class="${f.cellClass}" style="width:170px;" align="left">${f.PopupLink}</td>
+						<td class="${f.cellClass}" style="width:150px;" align="left">${f.UploadDate}</td>
+						<td class="${f.cellClass}" style="width:30px;" align="center">${f.DeleteAction}</td>
+            		</tr>
+            		
+            		{/for}
+            		
+            		<tr>                                
+                        <td class="tableHeader" colspan="9" align="right">&nbsp;</td>
+                    </tr>
+				</table>
+ 			  </td>
+    		</tr>
+
+    		</table>
+		    
+		    </textarea>
+		    
+		    <table><tr><td></td></tr></table>
+		    
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+    <div id="modalPopup" style="border:3px solid black; background-color:#DDDDFF; padding:25px; text-align:center; display:none;">
+        <span id="popupTitle" class="tableCellBold">Firmware Description</span><br />
+        <div id="popupContent" class="tableCell" style="border:1px solid black; width: 300px; height: auto; text-align:left; word-wrap:break-word; overflow-x:auto; overflow-y:auto;"></div><br />
+        <input type="button" value="Close" onclick="javascript:Popup.hide('modalPopup')" />
+    </div>
+
+<div id="footer"></div>
+
+</body>
+</html>

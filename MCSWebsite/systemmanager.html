@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/systemmanager.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script> 
+  <script type="text/javascript">loadjscssfile();</script>
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitSystemManagerPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        <div id="columnA">
+		<h2>System Manager</h2>
+
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="400px">
+		   <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">General Settings</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				EUI64 &nbsp;............................................
+			</td>
+			<td align="left">
+				<input type="text" id="txtEUI64" name="txtEUI64" maxlength="16" class="inputText" 
+                title="Format: 8 bytes represented as hex, 16 chars, no spaces. Example: 00000000000000F5" />&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				IPv6 Address &nbsp;.....&nbsp;
+				<input type="text" id="txtIPv6Address" name="txtIPv6Address" maxlength="39" class="inputText" style="width: 264px;"
+                title="Format: 16 bytes represented as hex grouped by 2 bytes/4 chars, separated by columns. Example: FE80:0000:0000:0000:0000:0000:0000:0000 There is NO need to edit it for all-in-one functionality" />
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">
+				UDP Port Number &nbsp;...........................
+			</td>
+			<td align="left">
+				<input type="text" id="txtUDPPortNumber" name="txtUDPPortNumber" maxlength="5" class="inputText" 
+                title="Format: Integer in range [1-65535]. There is NO need to edit it for all-in-one functionality" />
+			</td>
+		</tr>	
+    	<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*The System Manager must be restarted for the new settings to take effect.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Operational Settings</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+			<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				Max Device Number (NSD) &nbsp;...............
+			</td>
+			<td align="left">
+				<input type="text" id="txtMaxDeviceNumber" name="txtMaxDeviceNumber" maxlength="5" class="inputText" 
+                title="Format: Integer in range [0-65535]. Maximum number of Devices that are allowed on the system(on all subnets)." />&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">
+				Max Desired Latency (%) &nbsp;.................
+			</td>
+			<td align="left">
+			    <input type="text" id="txtMaxDesiredLatency" name="txtMaxDesiredLatency" maxlength="2" class="inputText" 
+                title="Format: Integer in range [0-99]. Maximum desired latency (percentage of publication period). Value in percentage. Publication contracts request, with a latency required below this value will not be allocated with de requested latency and will be allocated with the supplied value." />
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">
+				Device Timeout Interval (s) &nbsp;..............
+			</td>
+			<td align="left">
+                <input type="text" id="txtDeviceTimeOutInterval" name="txtDeviceTimeOutInterval" maxlength="5" class="inputText" 
+                title="Format: Integer in range [60-65535]. Timeout in seconds used by SM to detect that a device is down." />
+			</td>
+		</tr>	
+		<tr>
+			<td class="labels" align="left">
+				Advertise Period (s) &nbsp;.........................
+			</td>
+			<td align="left">
+                <input type="text" id="txtJoinAdvPeriod" name="txtJoinAdvPeriod" maxlength="2" class="inputText" 
+                title="Format: Integer from list {1,4,7,8,9,11,13,14}, as number of seconds" />
+			</td>
+		</tr>	
+		<tr>
+			<td class="labels" align="left">
+				Join Links Period (s) &nbsp;.........................
+			</td>
+			<td align="left">
+                <input type="text" id="txtJoinLinksPeriod" name="txtJoinLinksPeriod" maxlength="1" class="inputText" 
+                title="Format: Integer from list {1,2,3,4,5,6,7,8}, as number of seconds" />
+			</td>
+		</tr>	
+		<tr>
+			<td class="labels" align="left" valign="top">
+				Channels &nbsp;........................................
+			</td>
+			<td align="left" class="checklabel">
+                11<input type="checkbox" id="chkChannel0" name="chkChannel0" />
+                12<input type="checkbox" id="chkChannel1" name="chkChannel1" />
+                13<input type="checkbox" id="chkChannel2" name="chkChannel2" />
+                14<input type="checkbox" id="chkChannel3" name="chkChannel3" /><br />
+                15<input type="checkbox" id="chkChannel4" name="chkChannel4" />
+                16<input type="checkbox" id="chkChannel5" name="chkChannel5" />
+                17<input type="checkbox" id="chkChannel6" name="chkChannel6" />
+                18<input type="checkbox" id="chkChannel7" name="chkChannel7" /><br />
+                19<input type="checkbox" id="chkChannel8" name="chkChannel8" />
+                20<input type="checkbox" id="chkChannel9" name="chkChannel9" />
+                21<input type="checkbox" id="chkChannel10" name="chkChannel10" />
+                22<input type="checkbox" id="chkChannel11" name="chkChannel11" /><br />
+                23<input type="checkbox" id="chkChannel12" name="chkChannel12" />
+                24<input type="checkbox" id="chkChannel13" name="chkChannel13" />
+                25<input type="checkbox" id="chkChannel14" name="chkChannel14" />
+			</td>
+		</tr>	
+    	<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Logging</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				Logging level &nbsp;..................................
+			</td>
+			<td align="left">
+				<input type="text" id="txtLoggingLevel" name="txtLoggingLevel" maxlength="5" class="inputText" 
+                title="Valid values: DEBUG, INFO, WARN, ERROR" />
+			</td>
+		</tr>	
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan="2" align="center">
+						<input type="button" id="btnSave" name="btnSave" value="Save" class="button" onclick="SaveData();" onblur="ClearOperationResult('spnOperationResult')" />
+						<input type="button" id="btnCancel" name="btnCancel" value="Cancel" class="button" onclick="GetData();" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResult"></span>
+            </td>
+		</tr>
+		</table>
+    	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

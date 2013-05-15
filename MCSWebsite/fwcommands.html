@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="graphics/popup.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>  
+  <script type="text/javascript" src="scripts/counter.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript" src="scripts/firmware.js"></script>    
+  <script type="text/javascript" src="sql/commandsdal.js"></script>    
+  <script type="text/javascript" src="sql/firmwaredal.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="sql/topologydal.js"></script>
+  <script type="text/javascript" src="graphics/raphael/raphael.js" charset="utf-8"></script>  
+  <script type="text/javascript" src="scripts/topology.js"></script>    
+  <script type="text/javascript" src="scripts/fwcommands.js"></script>
+    
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+</head>
+
+<body onload="InitFirmwareUpdatePage();">
+
+<div id="outer">
+<div id="inner">
+<div id="header"></div>
+<div id="content">
+<div id="columnB"></div>
+<!-- START PAGE CONTENT -->
+<div id="columnA">
+    <h2>Firmware Update</h2>
+    <table border="0">
+    <tr>
+    <td>
+    <table cellpadding="0" cellspacing="0" width="950px" border="0">
+    <tr>
+        <td>		    
+        <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px" style="background-color: #F0F0F0;" border="0">		               
+         <tr>
+            <td class="labels" align="left">Firmware Type</td>
+        	<td align="left">
+				<input type="radio" name="rbFirmwareType" value="Radio" onclick="FirmareTypeChanged();" checked=true/> Radio
+        		<input type="radio" name="rbFirmwareType" value="Sensor" onclick="FirmareTypeChanged();"/> Sensor                
+				<input type="radio" name="rbFirmwareType" value="Backbone Router" onclick="FirmareTypeChanged();"/> Backbone Router
+			</td>                      
+            <td align="right">	
+                <input type="button" id="btnExecute" value="Execute" class="buttonFilter" onclick="Execute();" />
+            </td>                    
+         </tr>
+         <tr>
+         	<td class="labels" align="left">Firmware File</td>
+            <td align="left">
+		        <select id="ddlFirmwareFile" class="dropdown" style="width:485px"></select>
+            </td>
+            <td align="right">
+				<input type="button" id="btnBack" value="Back" class="buttonFilter" onclick="BackButtonClicked();" />                            
+            </td>
+         </tr>
+		 <tr>
+		 	<td class="labels" align="left">
+		 		<span id="spnBandwidth" style="color:black">Bandwidth allocation</span>						
+			</td>
+		 	<td colspan="2" align="left">				 		 			
+		        <select id="ddlBandwith" class="dropdown" style="width:250px "></select>				
+				<img onclick="javascript:GetHelp(helpPopup, helpContent, this, 'top adjacent-right', 450, 290)" src="styles/images/help.png"/>
+		        <span id="spnTSAPID" style="color:black">TsapID</span>
+            	<input type="text" id="txtTSAPID" class="inputText" style="width:50px;" />                   
+		        <span id="spnObjectID" style="color:black">ObjectID</span>                   
+				<input type="text" id="txtObjectID" class="inputText" style="width:50px;" />
+            </td>
+		 </tr>
+		 <tr>
+		 	<td class="labels" align="left" >Target device(s): </td>
+			<td colspan="2" align="left" width="800px"><span id="spnTargetDevices">none</span></td>
+		 </tr>
+		 <tr>
+		 	<td colspan="3" align="center"><table width="99%"><tr><td class="spacer"><hr></td></tr></table></td>									 						
+		 </tr>
+		 <tr>				 	
+			<td colspan="3" align="left">				        
+				<table border="0" width="100%">
+				<tr>
+					<td class="labels" style="width:90px">EUI-64 Address</td>
+					<td>	
+						<input type="text" id="txtEUI64Address" class="inputText" style="width:140px;" />                    							
+					</td>
+					<td class="labels" style="width:65px">Device Tag</td>
+					<td>						
+				        <input type="text" id="txtDeviceTag" name="txtDeviceTag" class="inputText" style="width:130px;" />							
+					</td>
+					<td class="labels" style="width:50px">Revision</td>
+					<td>				
+				        <select id="ddlRevision" class="dropdown" style="width:110px"></select>							
+					</td>
+					<td class="labels">Level</td>
+					<td>								        
+						<!--input type="text" id="txtLevel" name="txtLevel" class="inputText" style="width:30px;" /-->
+						<select id="ddlLevel" class="dropdown" style="width:50px"></select>								
+					</td>
+					<td align="right" style="width:50px">
+						<input type="button" id="btnSearch" value="Search" class="buttonFilter" onclick="Search();" />
+					</td>
+					<td align="right" style="width:50px">
+						<input type="button" id="btnReset" value="Reset" class="buttonFilter" onclick="Reset();" />
+					</td>
+				</tr>	
+				</table>                            
+            </td>
+		 </tr>				 			
+	</table>		   
+   					    
+    </td></tr>
+    		  		    
+    <tr><td>
+		    		    
+    <table width="100%" border="0" class="tableHeader">
+        <tr>	
+            <td align="left" class="labels" style="color:#FFFFFF">
+	       	    Items per page
+                <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 60px;" onchange="Search()"> 
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                </select>
+				<span id="spnTotalNoOfRows"></span> 
+            </td>   		
+		    <td align="right">   
+			    <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+				<a id="anchorPrev">&lt;</a>&nbsp;
+				<span id="spnPageNumber"></span>&nbsp;
+				<a id="anchorNext">&gt;</a>&nbsp;
+				<a id="anchorLast">&gt;&gt;</a>&nbsp;
+            </td>
+        </tr>
+    </table>
+    
+    <div id="tblDevices" style="text-align: center;"></div>
+    
+    <textarea id="devices_jst" style="display:none;">
+    
+    <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px">
+    <tr>
+	  <td colspan="11" align="left">
+		<table width="100%" cellpadding="0" cellspacing="0" border="0">
+			<tr>						
+				<td class="tableSubHeader" style="width: 150px;" align="center"><a href="javascript:ChangeOrderBy(2)" class="white">EUI-64 Address<span id="col2"></span></a></td>
+				<td class="tableSubHeader" style="width: 200px;" align="left">Device Tag</td>
+				<td class="tableSubHeader" style="width: 300px;" align="left">Device Role/Model</td>
+				<td class="tableSubHeader" style="width: 200px;" align="left">Revision</td>
+				<td class="tableSubHeader" style="width: 50px;"  align="left"><a href="javascript:ChangeOrderBy(1)" class="white">Level<span id="col1"></span></a></td>
+				<td class="tableSubHeader" style="width: 50px;"  align="right">All<input type="checkbox" id="chkAllDevices" style="vertical-align:sub;" onclick="AddRemoveAllDevices(this.checked)"/></td>
+			</tr>
+			
+            {for d in devices}
+			
+			<tr>										
+				<td class="${d.cellClass}" style="width: 150px;" align="center">${d.Address64}</td>
+				<td class="${d.cellClass}" style="width: 200px;" align="left">${d.DeviceTag}</td>
+				<td class="${d.cellClass}" style="width: 300px;" align="left">${d.DeviceRole}</td>
+				<td class="${d.cellClass}" style="width: 200px;" align="left">${d.Revision}</td>
+				<td class="${d.cellClass}" style="width: 50px;" align="left">${d.Level}</td>
+				<td class="${d.cellClass}" style="width: 50px;"  align="right">${d.Checked}</td>
+    		</tr>
+    		
+    		{/for}
+    		
+    		<tr>								
+				<td class="tableHeader" colspan="6" align="right">&nbsp;</td>
+			</tr>
+			
+		</table>
+		</td>
+	</tr>
+	</table>    
+    </textarea>    
+    </td></tr>
+    </table>      
+    </td></tr>
+  	</table>		    
+</div>		  	  	
+<!-- END PAGE CONTENT -->
+</div>
+</div>
+</div>
+<div id="footer"></div>
+
+</body>
+</html>

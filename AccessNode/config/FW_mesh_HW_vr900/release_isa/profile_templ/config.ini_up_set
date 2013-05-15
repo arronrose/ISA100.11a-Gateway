@@ -1,0 +1,18 @@
+########################## start file ##################################
+
+[GLOBAL]
+	 MODULES_WATCH_DOG=y
+	 WATCH_DOG_TYPE=internal
+	 WATCH_DOG_DIVISOR=5
+
+[BACKBONE]
+	TTY_DEV= "/dev/ttyS1"
+	TTY_BAUDS = B115200
+	RAW_LOG=no
+	TR_MAX_INACTIVITY = 30
+	TR_POWER_ID = 1
+
+
+
+
+###################################### end of file ##########################

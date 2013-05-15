@@ -1,0 +1,52 @@
+##############################################################################
+# log settings for LOG4CPLUS  for logging through a socket on a remote server#
+##############################################################################
+# log4cplus logging configuration file for SystemManager application.
+# TIP : watch the use of white spaces!
+
+log4cplus.rootLogger=ERROR, Isa100LogFile
+log4cplus.logger.I=INFO, socket
+log4cplus.logger.SMState= DEBUG, socket
+log4cplus.logger.ISA100SMState= DEBUG, socket
+
+# only these appenders should log the information
+#log4cplus.additivity.I=false
+log4cplus.additivity.SMState=false
+log4cplus.additivity.ISA100SMState=false 
+log4cplus.additivity.Isa100SMState.SmStackContracts=false
+log4cplus.additivity.Isa100SMState.SmStackRoutes=false
+log4cplus.additivity.Isa100SMState.SmStackKeys=false
+log4cplus.additivity.Isa100SMState.SmAttributes=false 
+log4cplus.additivity.Isa100SMState.Alerts=false
+
+#
+# Socket appender
+#
+log4cplus.appender.socket=log4cplus::SocketAppender
+# IP of the logging server
+log4cplus.appender.socket.host=10.16.0.150
+# Port on the receiveing  logging server
+log4cplus.appender.socket.port=8989
+#
+# Name of this connection. This will be used on the server to identify messages
+# sent from this machine. Could be any text that can identify this machine
+# (VR237 : meaning VR900 machine with IP ending in 237). This msg will only apear in the
+# server on each logging msg received from this machine.
+log4cplus.appender.socket.ServerName=VR246
+
+ 
+# APPENDER CONSOLE - write the messages to the console
+log4cplus.appender.console=log4cplus::ConsoleAppender
+log4cplus.appender.console.layout=log4cplus::PatternLayout
+log4cplus.appender.console.layout.ConversionPattern=%d{%m-%d %H:%M:%S,%q} %5p %c: %x %m%n
+ 
+# APPENDER FILE - Isa100LogFile
+log4cplus.appender.Isa100LogFile=log4cplus::RollingFileAppender
+log4cplus.appender.Isa100LogFile.File=/tmp/sm.log
+log4cplus.appender.Isa100LogFile.ImmediateFlush=true
+log4cplus.appender.Isa100LogFile.layout=log4cplus::PatternLayout
+log4cplus.appender.Isa100LogFile.Use_gmtime= true 
+log4cplus.appender.Isa100LogFile.layout.ConversionPattern=%d{%m-%d %H:%M:%S,%q} %5p %20c: %L %m%n
+log4cplus.appender.Isa100LogFile.MaxFileSize= 5000000														
+log4cplus.appender.Isa100LogFile.MaxBackupIndex=0
+#log4cplus.appender.Isa100LogFile.append= true

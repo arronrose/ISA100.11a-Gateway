@@ -1,0 +1,12 @@
+#!/bin/sh
+
+#test_dir=./out/debug/linux-pc/
+
+#cdir=`pwd`
+#cd "$test_dir"
+
+
+# while true; do ("$test_dir/SystemManager") done
+#(valgrind --leak-check=full --log-file="./SystemManager_valgrind.log" "$test_dir/SystemManager")
+valgrind --leak-check=full --show-reachable=yes --read-var-info=yes --track-origins=yes --log-file=./SM_valgrind.log ./out/debug/linux-pc/SystemManager
+#cd "$cdir"

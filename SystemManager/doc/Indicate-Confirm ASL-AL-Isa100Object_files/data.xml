@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisioDocument>
+	<DocumentProperties>
+		<Title></Title>
+		<HyperlinkBase href=""></HyperlinkBase>
+	</DocumentProperties>
+	<Pages>
+		<Page ID="0" Name="Sequence-1" NameU="Sequence-1">
+			<Shapes>
+				<Shape ID="1" UniqueID="{B6EF8E4A-0D19-48F3-A305-A3526A5B5454}" Name="Object Lifeline" NameU="Object Lifeline" Master="23">
+					<Text>ASL_Service</Text>
+					<XForm>
+						<PinX Unit="MM">1.182636595015587</PinX>
+						<PinY Unit="MM">7.698818897637795</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="7" UniqueID="{5AF9CA6A-7275-4627-B90A-48FB1993AAE9}" Name="Watermark Title" NameU="Watermark Title" Master="18">
+					<Text>Sequence</Text>
+					<XForm>
+						<PinX Unit="MM">5.846456692913386</PinX>
+						<PinY Unit="MM">8.267716535433070</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="8" UniqueID="{D9847F89-F8DE-4F0E-8B99-21DB855DF146}" Name="Object Lifeline.8" NameU="Object Lifeline.8" Master="23">
+					<Text>Process</Text>
+					<XForm>
+						<PinX Unit="MM">3.523622047244094</PinX>
+						<PinY Unit="MM">7.698818897637795</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="14" UniqueID="{ACD1E689-FDC7-48D5-A3BD-271D0D64301B}" Name="Object Lifeline.14" NameU="Object Lifeline.14" Master="23">
+					<Text>Isa100Object</Text>
+					<XForm>
+						<PinX Unit="MM">5.713339419009042</PinX>
+						<PinY Unit="MM">7.655511811023621</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="20" UniqueID="{8035EDE0-9E92-44BC-906E-CB0BBC2989AD}" Name="Activation" NameU="Activation" Master="25">
+					<XForm>
+						<PinX Unit="MM">1.182636595015587</PinX>
+						<PinY Unit="IN">3.905511811023621</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="21" UniqueID="{4A11C083-86AD-4608-9E9D-E3A46E251CDA}" Name="Activation.21" NameU="Activation.21" Master="25">
+					<XForm>
+						<PinX Unit="MM">3.523622047244094</PinX>
+						<PinY Unit="IN">3.927165354330708</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="22" UniqueID="{27687EEF-00F3-42F8-8A45-060AA0C972FC}" Name="Message" NameU="Message" Master="26">
+					<Text>indicate</Text>
+					<XForm>
+						<PinX Unit="IN">2.353129321129841</PinX>
+						<PinY Unit="MM">7.023622047244094</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="23" UniqueID="{97158E30-B971-47D0-B4AC-44651D2F5DB3}" Name="Message.23" NameU="Message.23" Master="26">
+					<Text>instance</Text>
+					<XForm>
+						<PinX Unit="MM">4.650203880764904</PinX>
+						<PinY Unit="MM">7.023622047244094</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="25" UniqueID="{52CECA7B-86C8-4FAC-9DB1-F6D656F5EAE5}" Name="Activation.25" NameU="Activation.25" Master="25">
+					<XForm>
+						<PinX Unit="MM">5.713339419009042</PinX>
+						<PinY Unit="IN">4.769685039370079</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="26" UniqueID="{C4798024-2491-49D2-A8D4-BA6BD892D496}" Name="Message (call)" NameU="Message (call)" Master="27">
+					<Text>cacheInstance</Text>
+					<XForm>
+						<PinX Unit="MM">3.586122047244094</PinX>
+						<PinY Unit="MM">6.398622047244094</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="27" UniqueID="{C16ADE6E-2D0D-4D7A-A4AB-EBB4EDBD8F20}" Name="Message.27" NameU="Message.27" Master="26">
+					<Text>indicate</Text>
+					<XForm>
+						<PinX Unit="MM">4.627706692913386</PinX>
+						<PinY Unit="MM">6.023622047244094</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="28" UniqueID="{7D44E993-B017-4792-BA22-48A8611BC9E6}" Name="Message.28" NameU="Message.28" Master="26">
+					<Text>request</Text>
+					<XForm>
+						<PinX Unit="IN">3.455340969347041</PinX>
+						<PinY Unit="MM">5.719488188976378</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="29" UniqueID="{9A6166F7-5ED8-49A0-8A5B-6C7728C8F7B3}" Name="Message.29" NameU="Message.29" Master="26">
+					<Text>confirm(for request)</Text>
+					<XForm>
+						<PinX Unit="MM">2.356580427446570</PinX>
+						<PinY Unit="MM">5.354330708661419</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="31" UniqueID="{9BDF735E-8EAF-4E83-8065-A76DAA03159C}" Name="Message.31" NameU="Message.31" Master="26">
+					<Text>expectedConfirm</Text>
+					<XForm>
+						<PinX Unit="MM">4.638955286839146</PinX>
+						<PinY Unit="MM">4.566929133858269</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="30" UniqueID="{5CCCBBC7-BAB1-473D-9586-2F4D392734A0}" Name="2-element Constraint" NameU="2-element Constraint" Master="28">
+					<Text>{for each Isa100Object instance from cache}</Text>
+					<XForm>
+						<PinX Unit="MM">3.740157480314961</PinX>
+						<PinY Unit="MM">4.940944881889765</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="32" UniqueID="{C6EE19B2-0630-4DA0-B492-AC6309509280}" Name="2-element Constraint.32" NameU="2-element Constraint.32" Master="28">
+					<Text>{can be repeated}</Text>
+					<XForm>
+						<PinX Unit="MM">5.905511811023622</PinX>
+						<PinY Unit="MM">4.921259842519685</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="33" UniqueID="{3EF525EF-AAED-4E5D-BFB6-D2CE23A5D780}" Name="Message.33" NameU="Message.33" Master="26">
+					<Text>confirm</Text>
+					<XForm>
+						<PinX Unit="MM">4.645669291338583</PinX>
+						<PinY Unit="MM">3.937007874015748</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="34" UniqueID="{D666C0C1-854F-467D-81A8-9E66FA4C629C}" Name="Message (return)" NameU="Message (return)" Master="30">
+					<Text>true</Text>
+					<XForm>
+						<PinX Unit="MM">4.606299212598426</PinX>
+						<PinY Unit="MM">4.330708661417323</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="35" UniqueID="{3B210750-F52A-4932-A687-A28D3D21CCF9}" Name="Message (return).35" NameU="Message (return).35" Master="30">
+					<Text>confirm</Text>
+					<XForm>
+						<PinX Unit="MM">3.484251968503938</PinX>
+						<PinY Unit="MM">3.622047244094489</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="36" UniqueID="{7B8FB25E-4127-489F-A387-A05EA54082BB}" Name="Message (return).36" NameU="Message (return).36" Master="30">
+					<Text>instance</Text>
+					<XForm>
+						<PinX Unit="MM">4.606299212598426</PinX>
+						<PinY Unit="MM">6.771653543307088</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="37" UniqueID="{DFE53F65-74A1-40A2-98F5-D278560CE4BE}" Name="Message (return).37" NameU="Message (return).37" Master="30">
+					<Text>return from confirm</Text>
+					<XForm>
+						<PinX Unit="MM">4.610833802024747</PinX>
+						<PinY Unit="MM">3.273622047244094</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="38" UniqueID="{201F3CF1-FD15-46B3-9959-0D356CFE05BE}" Name="Message (call) .38" NameU="Message (call) .38" Master="27">
+					<Text>remove object from map if the job has finished</Text>
+					<XForm>
+						<PinX Unit="MM">3.586122047244094</PinX>
+						<PinY Unit="MM">2.898622047244094</PinY>
+					</XForm>
+				</Shape>
+			</Shapes>
+		</Page>
+	</Pages>
+</VisioDocument>

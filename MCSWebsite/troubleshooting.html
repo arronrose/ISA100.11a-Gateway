@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="graphics/popup.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>  
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="scripts/alerts.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="scripts/troubleshooting.js"></script>
+    
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+</head>
+
+<body onload="InitTrobleshootingPage()">
+
+<div id="outer">
+<div id="inner">
+<div id="header"></div>
+<div id="content">
+<div id="columnB"></div>
+<!-- START PAGE CONTENT -->
+<div id="columnA">
+    <h2>Troubleshooting</h2>
+    <table cellpadding="0" cellspacing="0" width="950px" border="0">
+    	<tr>
+        <td>		    
+        <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px" style="background-color: #F0F0F0;" border="0">		               
+        	<tr>            
+	        	<td style="width:220px" align="center">
+	        		<label>
+	        			<span class="checklabelsmall">Show</span>
+		        		<select id="ddlShow" class="dropdown" onchange="ChangeShow();"> 
+							<option value="1" selected="selected">EUI-64</option> 
+							<option value="2">IPV6 Address</option> 
+							<option value="3">Device Tag</option>
+						</select>
+					</label>
+				</td>                      						
+				<td style="width:200px" align="center">		
+					<label>				
+						<span class="checklabelsmall">Display&nbsp;last</span>
+						<select id="ddlDisplayLast" class="dropdown" style="width:50px" onchange="ChangeDisplayLast();">
+							<option id="50" selected="selected">50</option>
+							<option id="100">100</option>
+							<option id="150">150</option>
+							<option id="200">200</option>
+						</select>																		
+						<span class="checklabelsmall">alerts</span>	
+					</label>							 			
+				</td>			
+				<td style="width:300px" align="center">
+					<label>
+						<input type="checkbox" id="chkAutoRefresh" onclick="AutoRefresh()" style="vertical-align:middle ;"/>
+						<span class="checklabelsmall">Autorefresh&nbsp;every</span>
+						<select id="ddlAutoRefreshInterval" class="dropdown" style="width:40px" onchange="ChangeAutoRefreshInterval()">
+							<option id="5">5</option>
+							<option id="10">10</option>
+							<option id="15" selected="selected">15</option>
+							<option id="30">30</option>
+							<option id="60">60</option>					
+						</select>
+						<span class="checklabelsmall">seconds</span>	
+					</label>
+				</td>						 
+	            <td align="right">	
+	                <input type="button" id="btnApplyEditFilters" value="Edit Filters" class="buttonFilter" style="width:80px" onclick="ApplyEditFilters();" />
+	            </td>                    
+            </tr>
+		 	<!--tr>
+		 		<td colspan="4"><hr /></td>
+			</tr-->
+		</table>	
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="950px" style="background-color: #F0F0F0;" border="0">
+			<tr><td><table id="tblFilterSummary" border="0" width="100%">	
+				 <tr><td colspan="4" style="width:50px; padding-left:0px"><span class="labels"><strong>Filters</strong></span></td></tr>					 			
+				 <tr><td colspan="4" style="width:50px; padding-left:0px"><span class="labels" id="spnAlerts"><strong>Alerts:</strong></span></td></tr>
+				 <tr><td colspan="4" style="width:50px; padding-left:0px"><span class="labels" id="spnDevices"><strong>Devices:</strong></span></td></tr>
+			</table></td></tr>
+
+			<tr><td colspan="4"><!--div height="300px"></div--><table id="tblFilters" border="0" bordercolor="black" style="display:none"> 			
+			<tr>
+				<td colspan="4" align="right">
+					<input type="button" id="btnClearFilters" value="Clear Filters" class="buttonFilter" style="width:80px" onclick="ClearFilters();"/>
+				 </td>		 	
+			</tr>					 
+		 	<tr>		 		
+		 		<td class="labels" align="left" width="175px">
+		 			<label>Alert class/type</label>					
+				</td>	
+				<td>
+					<input type="checkbox" id="chkAllAlerts" onclick="CheckUncheckAllAlertTypes(this.checked)">All</input>
+				</td>
+			 	<td class="labels" align="left">
+			 		<label>Devices</label>
+			 	</td>			 
+				<td class="labels" align="right">
+					<input type="checkbox" id="chkAllDevices" onclick="CheckUncheckAllDevices(this.checked)">All</input>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="labels" valign="top">	
+				<table>
+					<tr><td colspan="2">
+						<input type="checkbox" id="chkAppAlertTypeDevice" onclick="CheckUncheckAlertType(this.checked, 1, null);" >Device Join/Leave</input></br>
+				 	</tr><td>								
+		 			<tr>
+		 				<td width="20px"></td>
+						<td>
+							<input type="checkbox" id="chkAlertType0" onclick="CheckUncheckAlertType(this.checked, null, 0);" style="padding-right">Device Join</input></br>
+							<input type="checkbox" id="chkAlertType1" onclick="CheckUncheckAlertType(this.checked, null, 1);">Device Join Failed</input></br>
+							<input type="checkbox" id="chkAlertType2" onclick="CheckUncheckAlertType(this.checked, null, 2);">Device Leave</input></br>	
+						</td>
+		 			</tr>					
+
+					<tr><td colspan="2">
+						<input type="checkbox" id="chkAppAlertTypeUDOProgress" onclick="CheckUncheckAlertType(this.checked, 2, null);">UDO Progress</input></br>
+				 	</tr><td>													
+					<tr>
+		 				<td width="20px"></td>
+						<td>
+							<input type="checkbox" id="chkAlertType3" onclick="CheckUncheckAlertType(this.checked, null, 3);">Transfer Started</input></br>
+							<input type="checkbox" id="chkAlertType4" onclick="CheckUncheckAlertType(this.checked, null, 4);">Transfer Progress </input></br>
+							<input type="checkbox" id="chkAlertType5" onclick="CheckUncheckAlertType(this.checked, null, 5);">Transfer End</input></br>
+						</td>
+		 			</tr>
+
+					<tr><td colspan="2">
+						<input type="checkbox" id="chkAppAlertTypeContract" onclick="CheckUncheckAlertType(this.checked, 3, null);">Contract</input></br>
+				 	</tr><td>													
+					<tr>
+		 				<td width="20px"></td>
+						<td>
+							<input type="checkbox" id="chkAlertType6" onclick="CheckUncheckAlertType(this.checked, null, 6);">Contract Establish</input></br>
+							<input type="checkbox" id="chkAlertType7" onclick="CheckUncheckAlertType(this.checked, null, 7);">Contract Modify</input></br>
+							<input type="checkbox" id="chkAlertType8" onclick="CheckUncheckAlertType(this.checked, null, 8);">Contract Refusal</input></br>
+							<input type="checkbox" id="chkAlertType9" onclick="CheckUncheckAlertType(this.checked, null, 9);">Contract Terminate</input></br>
+						</td>
+		 			</tr>
+
+					<tr><td colspan="2">
+						<input type="checkbox" id="chkAppAlertTypeTopology" onclick="CheckUncheckAlertType(this.checked, 4, null);">Topology</input></br>
+				 	</tr><td>													
+					<tr>
+		 				<td width="20px"></td>
+						<td>					
+							<input type="checkbox" id="chkAlertType10" onclick="CheckUncheckAlertType(this.checked, null, 10);">Parent Change</input></br>
+							<input type="checkbox" id="chkAlertType11" onclick="CheckUncheckAlertType(this.checked, null, 11);">Backup Change</input></br>	
+						</td>
+		 			</tr>
+				</td></tr></table>								
+				</td>
+				<td colspan="2" valign="top">		
+				  <table >
+					<tr>
+						<td colspan="4" align="right">						
+							<div id="tblDevices" style="text-align: center;"></div>    
+						    <textarea id="devices_jst" style="display:none;">    
+						    <table cellpadding="0" cellspacing="0" class="containerDiv" width="700px">
+						    <tr>
+							  <td colspan="4" align="left">
+								<table width="100%" cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<td class="tableSubHeader" style="width: 40px;" align="center">&nbsp;</td>						
+										<td class="tableSubHeader" style="width: 180px;" align="left">EUI-64</td>
+										<td class="tableSubHeader" style="width: 220px;" align="left">IPv6 Address</td>
+										<td class="tableSubHeader" style="width: 200px;" align="left">Device Tag</td>
+										
+									</tr>
+									
+						            {for d in devices}
+									
+									<tr>
+										<td class="${d.cellClass}" style="width: 40px;" align="center">${d.Checked}</td>										
+										<td class="${d.cellClass}" style="width: 180px;" align="left">${d.Address64}</td>									
+										<td class="${d.cellClass}" style="width: 220px;" align="left">${d.Address128}</td>
+										<td class="${d.cellClass}" style="width: 200px;" align="left">${d.DeviceTag}</td>																												
+						    		</tr>
+						    		
+						    		{/for}
+						    		
+						    		<tr>								
+										<td class="tableHeader" colspan="4" align="right">&nbsp;</td>
+									</tr>
+									
+								</table>
+								</td>
+							</tr>
+							</table>    
+						    </textarea>						 						
+						</td>
+					</tr>
+				</table>					
+	            </td>
+		 		</tr>	
+			</table></td></tr>			 
+		</table>		     					   
+    	</td>
+		</tr>
+	</table>      		    
+</div>		  	  	
+<!-- END PAGE CONTENT -->
+</div>
+</div>
+</div>
+<div id="footer"></div>
+
+</body>
+</html>

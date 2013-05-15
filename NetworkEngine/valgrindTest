@@ -1,0 +1,1 @@
+valgrind --leak-check=full --log-file="./NE_valgrind.log" --show-reachable=yes --read-var-info=yes --track-origins=yes ./out/debug/linux-pc/Test_NetworkEngine.o

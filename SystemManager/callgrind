@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pushd ./
+
+valgrind --tool=callgrind --dump-instr=yes --trace-jump=yes ./out/debug/linux-pc/SystemManager
+
+popd

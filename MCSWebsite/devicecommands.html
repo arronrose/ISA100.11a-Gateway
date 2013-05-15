@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script> 
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/devicecommands.js"></script>
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="scripts/devicechannel.js"></script>
+  <script type="text/javascript" src="sql/devicechanneldal.js"></script>
+  <script type="text/javascript" src="sql/commandsdal.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>  
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/devicetabs.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitDeviceCommandsPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        	<div id="columnA">
+		    <h2>Device Details</h2>
+		    
+		    <div id="tabHeader"></div>
+		    
+		    <table cellpadding="0" cellspacing="0" width="900px" border="0">
+              <tr align="center">
+		          <td width="70px" id="tab0"></td>
+    		      <td width="60px" id="tab1"></td>
+	   	          <td width="110px" id="tab2"></td>
+  	   	          <td width="120px" id="tab3"></td>
+   	              <td width="110px" id="tab4"></td>
+		          <td width="130px" id="tab5"></td>
+		          <td width="100px" id="tab6"></td>
+		          <td class="tabButton">&nbsp;</td>
+		      </tr>
+		    </table> 
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="900px">
+	       	   <tr>
+		      	 <td colspan="2" align="left">
+			     	<table width="100%" cellpadding="0" cellspacing="0">
+				    	<tr>								
+					       	<td class="windowHeader"></td>
+    					</tr>
+	       			</table>
+	   	       	</td>
+    		  </tr>
+    		  <tr>
+			    <td colspan="1" class="labels" align="left">
+    			   <strong>EUI-64 Address: </strong><span id="spnEUI64"></span><br />
+   			   	   <strong>IPv6 Address: </strong><span id="spnIPv6"></span><br />
+			    </td>
+                <td colspan="1" align="right" valign="top">
+                    <input type="button" id="btnBack" name="btnBack" value='Back' class="buttonFilter" onclick="BackButtonClicked();" />
+		        </td>
+		      </tr>
+		      <tr>
+		          <td colspan="2" align="center">
+		              <table width="400px" class="containerDiv" cellpadding="0" cellspacing="0">
+		                  <tr>
+		                      <td colspan="2" class="windowHeader">
+		                         Commands
+		                      </td>
+		                  </tr>
+		            	  <tr>
+               			      <td class="spacer" colspan="2"></td>
+                  		  </tr>
+           		  		  <tr>
+                          	<td class="labels" colspan="2">
+                          		Command &nbsp;..............&nbsp;
+                                <select id="ddlCommands" name="ddlCommands" class="dropdown" onchange="CommandSelectionChanged();" style="width: 207px;"></select>&nbsp;
+                  			</td>
+                	      </tr>
+                		
+                	      <tr>
+			                 <td class="labels" align="right" colspan="1" width="360px">
+			                    <span id="spnChannels" style="display:none;"> 
+				                	Process Value &nbsp;....................&nbsp;
+             				       <select id="ddlChannels" name="ddlChannels" class="dropdown" style="width:154px;"></select>
+                 			    </span>	
+        				        <span id="spnRestartType" style="display:none;"> 
+				                	Restart Type &nbsp;......................&nbsp;
+    				                <select id="ddlRestartType" name="ddlRestartType" class="dropdown" style="width:154px;"></select>
+                                </span>
+        				        <span id="spnObjectAttributes" style="display:none;"> 
+                                    TSAP&nbsp;ID (port)&nbsp;....................&nbsp;
+                                    <input type="text" id="txtTsapId" name="txtTsapId"  maxlength="2" class="inputText" style="width:150px;"
+                                           title="Format: Integer in range [0,15]" /><br />
+                                    Object&nbsp;ID&nbsp;...........................&nbsp;
+                                    <input type="text" id="txtObjectId" name="txtObjectId"  maxlength="5" class="inputText" style="width:150px;"
+                                           title="Format: Integer in range [0,65535]" /><br />
+                                    <span id="spnAttributeMethodId">Attribute&nbsp;ID&nbsp;........................&nbsp;</span>
+                                    <input type="text" id="txtAttributeMethodId" name="txtAttributeMethodId"  maxlength="4" class="inputText" style="width:150px;"
+                                           title="Format: Integer in range [0,4095]" /><br />
+                                    Index1&nbsp;...............................&nbsp;
+                                    <input type="text" id="txtIndex1" name="txtIndex1"  maxlength="5" class="inputText" style="width:150px;"
+                                           title="Format:  Integer in range [0,32767]" /><br />
+                                    Index2&nbsp;...............................&nbsp;
+                                    <input type="text" id="txtIndex2" name="txtIndex2"  maxlength="5" class="inputText" style="width:150px;"
+                                           title="Format:  Integer in range [0,32767]" /><br />
+                                    <span id="spnDataBufferLabel" style="display:none;">Values&nbsp;(HEX)&nbsp;......................&nbsp;</span>
+                                    <span id="spnDataBuffer" style="display:none;">
+                                    <input type="text" id="txtDataBuffer" name="txtDataBuffer"  maxlength="100" class="inputText" style="width:150px;"
+                                           title="Format: Hexadecimal string (max length: 100)" />
+                                    </span>
+                                </span>
+								<span id="spnRequestedCommittedBurst" style="display:none;">
+									Committed Burst&nbsp;&nbsp;................&nbsp;
+									<input  type="text" id="txtRequestedCommittedBurst" name="txtRequestedCommittedBurst" class="inputText" style="width:150px;" 
+											title="Positive values means packets per second, negative value means seconds between packets. Valid range is [-32768, 4]" /><br />	
+								</span>
+                              </td>
+							  <td colspan="1"></td>
+                          </tr>
+                          
+                          <tr>
+			                 <td colspan="2" align="left">
+                				<table width="100%" cellpadding="0" cellspacing="0">
+				        	<tr>								
+						<td colspan='2' align='center'>
+					       <input type="button" id="btnExecute" name="btnExecute" value='Execute' class="button" onclick="ExecuteCommand();" />
+					   	   <input type="button" id="btnCancel" name="btnCancel" value='Cancel' class="button" onclick="CancelClicked();" />
+					    </td>
+					</tr>
+            		<tr>
+			             <td colspan="2" align="center">
+                		      <span id="spnExecuteResult"></span>
+                        </td>
+            		</tr>
+				</table>
+			</td>
+		</tr>
+                		
+                		
+                      </table>
+                      <br />
+		          </td>
+		      </tr>		      
+		    </table>
+		    
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

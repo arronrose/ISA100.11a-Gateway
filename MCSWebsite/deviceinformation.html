@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/devicetabs.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="scripts/deviceinformation.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>  
+  <script type="text/javascript" src="sql/commandsdal.js"></script>  
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitDeviceInformationPage();">
+
+<div id="outer">
+<div id="inner">
+    <div id="header"></div>
+    <div id="content">
+        <div id="columnB"></div>
+        <!-- START PAGE CONTENT -->        
+        <div id="columnA">
+		<h2>Device Details</h2>	    
+        <table cellpadding="0" cellspacing="0" width="900px" border="0">
+            <tr align="center">
+		        <td width="70px" id="tab0"></td>
+    		    <td width="60px" id="tab1"></td>
+	   	        <td width="110px" id="tab2"></td>
+  	   	        <td width="120px" id="tab3"></td>
+   	            <td width="110px" id="tab4"></td>
+		        <td width="130px" id="tab5"></td>
+		        <td width="100px" id="tab6"></td>
+		        <td class="tabButton">&nbsp;</td>
+            </tr>
+        </table> 
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="900px" border="0">
+	        <tr>
+	            <td colspan="1" align="left">
+     	            <table width="100%" cellpadding="0" cellspacing="0">
+				        <tr><td class="windowHeader"></td></tr>
+	       		    </table>
+	   	       	</td>
+            </tr>
+    		<tr>
+			    <td class="labels">
+			    <table width="100%">
+			        <tr>
+			            <td colspan="1" align="left">
+			   	           <strong>EUI-64 Address: </strong><span id="spnEUI64"></span><br />
+   			   	           <strong>IPv6 Address: </strong><span id="spnIPv6"></span><br />
+   			   	           <strong>Subnet ID: </strong><span id="spnSubnetId"></span> <br />
+   			   	           <br />
+  			   	           <strong>Device Role: </strong><span id="spnDeviceRole"></span> <br />
+  			   	           <strong>Device Status: </strong><span id="spnDeviceStatus"></span> <br />
+   			   	           <strong>Last Read: </strong><span id="spnLastRead"></span> <br />
+   			   	           <strong>Power Supply Status: </strong><span id="spnPowerSupplyStatus"></span>  <br />
+                        </td>
+			            <td colspan="1" align="left">
+		   	               <strong>Manufacturer: </strong><span id="spnManufacturer"></span> <br />
+		   	               <strong>Model: </strong><span id="spnModel"></span> <br />
+		   	               <strong>Revision: </strong><span id="spnRevision"></span> <br />
+		   	               <br />
+		   	               <strong>DPDUsTransmitted: </strong><span id="spnDPDUsTransmitted"></span> <br />
+                           <strong>DPDUsReceived: </strong><span id="spnDPDUsReceived"></span> <br /> 			   	   
+                           <strong>DPDUsFailedTransmission: </strong><span id="spnDPDUsFailedTransmission"></span> <br />                   
+                           <strong>DPDUsFailedReception: </strong><span id="spnDPDUsFailedReception"></span> <br />
+                        </td>
+                        <td colspan="1" align="right" valign="top"> 
+                            <input type="button" id="btnBack" value='Back' class="buttonFilter" onclick="BackButtonClicked();"/>
+                        </td>
+                    </tr>
+                    <tr><td colspan="3"><hr /></td></tr>
+                    <tr>
+                        <td colspan="2" align="left">
+                            <strong>Last refreshed on UTC: </strong><span id="spnRefreshDate"></span>
+                        </td>
+	                    <td colspan="1" align="right">
+                            <input type="button" id="btnRefresh" value='Refresh' class="buttonFilter" style="display: inline;" onclick="RefreshPage();" />	                
+	                    </td>
+                    </tr>
+                </table>
+                </td>
+            </tr>
+    	    <tr>
+                <td class="labels">              
+                    <table cellpadding="0" cellspacing="0" class="tableHeader" width="880px" border="0" >
+                        <tr>
+                             <td align="left" class="labels" style="color:#FFFFFF">
+					       	    Items per page
+			                    <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 60px;" onchange="PageNavigate(1)"> 
+		                            <option value="10">10</option>
+		                            <option value="25">25</option>
+		                            <option value="50">50</option>
+		                            <option value="100">100</option>
+		                            <option value="200">200</option>
+			                    </select> 
+								<span id="spnTotalNoOfRows"></span>
+			                 </td>   	
+    			            <td align="right">
+			                    <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+			                    <a id="anchorPrev">&lt;</a>&nbsp;
+			                    <span id="spnPageNumber"></span>&nbsp;
+			                    <a id="anchorNext">&gt;</a>&nbsp;
+			                    <a id="anchorLast">&gt;&gt;</a>&nbsp;
+                            </td>
+                        </tr>
+                    </table>
+		            <div id="tblProcessValues" style="text-align: center;"></div>
+		            <textarea id="processvalues_jst" style="display:none;">
+    		        <table cellpadding="0" cellspacing="0" class="containerDiv" width="880px">
+		                <tr>
+			                <td align="center">
+				                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+					                <tr>								
+						                <td class="tableSubHeader" style="width: 170px;" align="left">Name</td>
+						                <td class="tableSubHeader" style="width: 100px;" align="center">M.U.</td>
+						                <td class="tableSubHeader" style="width: 100px;" align="center">Format</td>
+						                <td class="tableSubHeader" style="width: 100px;" align="center">TSAP ID</td>
+						                <td class="tableSubHeader" style="width: 100px;" align="center">Object ID</td>
+						                <td class="tableSubHeader" style="width: 90px;" align="center">Attribute ID</td>
+						                <td class="tableSubHeader" style="width: 90px;" align="center">Index1</td>
+						                <td class="tableSubHeader" style="width: 90px;" align="center">Index2</td>
+										<td class="tableSubHeader" style="width: 30px;" align="center">ATD</td>
+					                </tr>					
+                                    {for pv in processvalues}					
+					                <tr>
+						                <td class="${pv.cellClass}" style="width: 170px;" align="left">${pv.ChannelName}</td>
+						                <td class="${pv.cellClass}" style="width: 100px;" align="center">${pv.UnitOfMeasurement}</td>
+						                <td class="${pv.cellClass}" style="width: 100px;" align="center">${pv.ChannelFormat}</td>
+						                <td class="${pv.cellClass}" style="width: 100px;" align="center">${pv.SourceTSAPID}</td>
+						                <td class="${pv.cellClass}" style="width: 100px;" align="center">${pv.SourceObjID}</td>
+						                <td class="${pv.cellClass}" style="width: 90px;" align="center">${pv.SourceAttrID}</td>
+						                <td class="${pv.cellClass}" style="width: 90px;" align="center">${pv.SourceIndex1}</td>
+						                <td class="${pv.cellClass}" style="width: 90px;" align="center">${pv.SourceIndex2}</td>
+										<td class="${pv.cellClass}" style="width: 30px;" align="center">${pv.ATD}</td>
+                    		        </tr>           		
+            		                {/for}            		
+            		                <tr>
+            		                    <td class="tableHeader" colspan="9" align="right">&nbsp;</td>															
+		        			        </tr>
+				                </table>
+ 			                </td>
+                        </tr>
+    		        </table>		    
+		            </textarea>
+		        </td>
+		        </tr>
+                <tr>
+                    <td class="spacer"></td>
+                </tr>
+            </table>		    
+	  	    </div>		  	
+        <!-- END PAGE CONTENT -->
+        </div>
+    </div>
+    </div>
+<div id="footer"></div>
+
+</body>
+</html>

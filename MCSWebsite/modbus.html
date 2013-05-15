@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/modbus.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitModbusPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+	    <div id="columnA">
+		<h2>MODBUS Server</h2>
+		
+		<table><tr><td>
+		
+		<table width="945px" cellpadding="0" cellspacing="0"> <!-- main table, 3 sections | formats -->
+		<tr  valign="top"><td>
+		
+		
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="550px">
+		 <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Input registers</td>
+						<td class="windowHeader" align="right"><a class="white" title="Host, register formats" href="javascript:ShowHideHelp('open');">Help</a>&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<select id="lstInputRegisters" size="8" class="inputText" style="width: 528px;" onchange="EditInputRegister();"></select>
+  	        </td>		
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<input type="text" id="txtInputRegister" maxlength="100" class="inputText" style="width: 525px;" 
+                title="Format: &lt;start_address&gt;,&lt;word_count&gt;,&lt;EUI64&gt;,&lt;TSAPID&gt;,&lt;ObjId&gt;,&lt;AttrId&gt;,&lt;Idx1&gt;,&lt;Idx2&gt;,&lt;MethId&gt;[, &lt;status_byte&gt;]" />&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan="2" align="center">
+						<input type="button" id="btnSaveInputRegister" value="Save" class="button" onclick="SaveInputRegister();" onblur="ClearOperationResults()" />
+						<input type="button" id="btnDeleteInputRegister" value="Delete" class="button" onclick="DeleteInputRegister();" onblur="ClearOperationResults()" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+        <tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResultInputRegister"></span>
+            </td>
+		</tr>
+		
+	    <tr>
+		  <td colspan="2" align="left">
+			<table width="100%" cellpadding="0" cellspacing="0">
+			<tr>								
+				<td class="windowHeader" colspan="2">Holding registers</td>
+			</tr>
+			</table>
+		  </td>
+        </tr>
+	    <tr>
+		  <td class="spacer" colspan="2"></td>
+        </tr>				
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<select id="lstHoldingRegisters" size="8" class="inputText" style="width: 528px;" onchange="EditHoldingRegister();"></select>
+		    </td>  		
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<input type="text" id="txtHoldingRegister" maxlength="100" class="inputText" style="width: 525px;" 
+                title="Format: &lt;start_address&gt;,&lt;word_count&gt;,&lt;EUI64&gt;,&lt;TSAPID&gt;,&lt;ObjId&gt;,&lt;AttrId&gt;,&lt;Idx1&gt;,&lt;Idx2&gt;,&lt;MethId&gt;[, &lt;status_byte&gt;]" />&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+					<td colspan="2" align="center">
+						<input type="button" id="btnSaveHoldingRegister" value="Save" class="button" onclick="SaveHoldingRegister();" onblur="ClearOperationResults()" />
+						<input type="button" id="btnDeleteHoldingRegister" value="Delete" class="button" onclick="DeleteHoldingRegister();" onblur="ClearOperationResults()" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResultHoldingRegister"></span>
+            </td>
+		</tr>
+
+		<tr>
+		  <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Manage host list</td>
+					</tr>
+				</table>
+		  </td>
+		</tr>
+		<tr>
+		  <td colspan="2" align="left">
+		    <form name="form1" action="/rpc.cgi" enctype="multipart/form-data" method="post" target="iFrame">
+   			  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+			    <tr>
+				  <td class="labels"> 
+                                     Upload hosts ....
+          	   	    <input type="hidden" name="call1" id="call1" />
+                    <input type="file" id="modbusFile" name="figure2" value="2" size="40" style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; border: solid 1px #000000;" 
+                    onkeydown="return false;" onkeypress="return false;" onkeyup="return false;" />
+                  </td>
+                  <td>
+                    <input type="submit" id="btnUpload" value="Upload" class="button" onclick="return Upload();" />
+                  </td>
+		        </tr>
+    		    <tr>							
+                  <td class="labels"> 
+                                     Download hosts
+                  </td>	
+				  <td align="center">
+				    <input type="submit" id="btnDownload" value="Save" class="button" onclick="Download();" />
+				  </td>
+				</tr>
+				<tr>							
+                  <td class="labels"> 
+                                     Load the new registers into MODBUS
+                  </td>	
+				  <td align="center">
+				    <input type="button" id="btnActivate" value="Activate" class="button" onclick="Activate();" onblur="ClearOperationResults()" />
+				  </td>
+				</tr>
+		      </table>
+              </form>
+              <iframe src="about:blank" id="iFrame" name="iFrame" style="display:none;"></iframe>
+			</td>
+		  </tr>
+		  <tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResultActivate"></span>
+            </td>
+		</tr>
+            
+      </table>
+    </td>
+    <td align="left" style="background-color: #F0F0F0;">
+    			<div id="divHelp" class="labels" style="display: none; width='100%'; font-size :9px;">
+    			<b>Input Register Format:</b> &lt;start_address&gt;,&lt;word_count&gt;,&lt;EUI64&gt;, 
+                &lt;TSAPID&gt;,&lt;ObjId&gt;,&lt;AttrId&gt;,&lt;Idx1&gt;,&lt;Idx2&gt;,&lt;MethId&gt;[,&lt;status_byte&gt;]<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>start_address:</b> unsigned integer, 2 bytes<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>word_count:</b> integer, 2 bytes<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>EUI64:</b> 8 bytes hex represented (16 characters)<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>TSAPID:</b> unsigned integer in range [1-15] <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>ObjId:</b> unsigned integer, 2 bytes<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>AttrId:</b> unsigned integer, 2 bytes<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>Idx1:</b> unsigned integer, 1 byte<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>Idx2:</b> unsigned integer, 1 byte<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>MethId:</b> unsigned integer, 2 bytes<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>status_byte :</b> 0, 1, 2<br /><br />
+                
+                <b>Holding Register Format:</b> &lt;start_address&gt;,&lt;word_count&gt;,&lt;EUI64&gt;, 
+                &lt;TSAPID&gt;,&lt;ObjId&gt;,&lt;AttrId&gt;,&lt;Idx1&gt;,&lt;Idx2&gt;,&lt;MethId&gt;[,&lt;status_byte&gt;]<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>start_address:</b> unsigned integer, 2 bytes<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>word_count:</b> integer, 2 bytes<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>EUI64:</b> 8 bytes hex represented (16 characters)<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>TSAPID:</b> unsigned integer in range [1-15] <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>ObjId:</b> unsigned integer, 2 bytes<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>AttrId:</b> unsigned integer, 2 bytes<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>Idx1:</b> unsigned integer, 1 byte<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>Idx2:</b> unsigned integer, 1 byte<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>MethId:</b> unsigned integer, 2 bytes<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>status_byte :</b> 0, 1, 2<br />
+                  <table width="100%">
+                    <tr>
+                        <td align="right">
+                            <a title="Close" href="javascript:ShowHideHelp('close');">Close</a>&nbsp;<br />
+                        </td>
+                    </tr>
+                </table>
+                </div>
+  			</td>
+        
+        </tr>
+        </table>    <!-- main table, 3 sections | formats -->
+		
+				</td></tr>
+		
+	    <tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		
+		</table>
+		
+		
+	   </div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

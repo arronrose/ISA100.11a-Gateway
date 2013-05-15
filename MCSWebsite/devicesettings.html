@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/devicetabs.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript" src="sql/commandsdal.js"></script>
+  <script type="text/javascript" src="scripts/devicesettings.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>  
+  <script type="text/javascript" src="scripts/reports.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitDeviceSettingsPage();">
+
+<div id="outer">
+<div id="inner">
+    <div id="header"></div>
+    <div id="content">
+        <div id="columnB"></div>
+        <!-- START PAGE CONTENT -->        
+        <div id="columnA">
+		    <h2>Device Details</h2>
+		    
+		    <div id="tabHeader"></div>
+		    
+		    <table cellpadding="0" cellspacing="0" border="0">
+		    <tr>
+		    <td>		    
+		    <table cellpadding="0" cellspacing="0" width="900px" border="0">
+                <tr align="center">
+                    <td width="70px" id="tab0"></td>
+                    <td width="60px" id="tab1"></td>
+                    <td width="110px" id="tab2"></td>
+                    <td width="120px" id="tab3"></td>
+                    <td width="110px" id="tab4"></td>
+                    <td width="130px" id="tab5"></td>
+                    <td width="100px" id="tab6"></td>
+		            <td class="tabButton">&nbsp;</td>
+                </tr>
+		    </table> 
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="900px" border="0">
+	       	   <tr>
+		      	 <td colspan="2" align="left">
+			     	<table width="100%" cellpadding="0" cellspacing="0">
+				    	<tr><td class="windowHeader"></td></tr>
+	       			</table>
+	   	       	</td>
+    		  </tr>
+            <tr>
+                <td colspan="1" class="labels" align="left">
+                    <strong>EUI-64 Address: </strong><span id="spnEUI64"></span><br />
+                    <strong>IPv6 Address: </strong><span id="spnIPv6"></span><br />
+                </td>
+                <td colspan="1" align="right" valign="top">
+                    <input type="button" id="btnBack" name="btnBack" value='Back' class="buttonFilter" onclick="BackButtonClicked();" />
+                </td>
+            </tr>
+              <tr><td colspan="2"><hr /></td></tr>
+              <tr>
+                <td class="labels" colspan="1"  align="left">
+                    <strong>Last refreshed on UTC: </strong><span id="spnRefreshDate"></span>
+                </td>
+                <td colspan="1"  align="right">
+                    <input type="button" id="btnRefresh" name="btnRefresh" value='Refresh' class="buttonFilter" onclick="RefreshPage();" />
+                </td>
+             </tr>
+		    <tr>
+		          <td colspan="2">
+		              <table width="898px" border="0">
+		                  <tr valign="top">
+		                      <td>    <!-- neighbors -->
+		                      
+                              <div id="tblNeighbors"></div>
+		                      
+		                      <textarea id="neighbors_jst" style="display:none;">
+		    
+                    		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="450px">
+                        		    <tr>
+                        			  <td colspan="9" align="left">
+                        				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+                        				    <tr>								
+                        						<td class="tableHeader" style="width: 450px;" colspan="3">Neighbors</td>
+                        					</tr>
+                        					<tr>								
+                        						<td class="tableCellBold" align="left">Address 64</td>
+                       							<td class="tableCellBold" align="left">Is Clock Source</td>
+                        						<td class="tableCellBold" align="right">Signal Quality</td>
+                        					
+                        					</tr>
+                        					
+                        					{for n in neighbors}
+                        					
+                        					<tr>
+                            		  		
+                        						<td class="${n.cellClass}" align="left">${n.Address64}</td>
+                        						<td class="${n.cellClass}" align="left">${n.IsClockSource}</td>
+                        						<td class="${n.cellClass}" align="right">${n.SignalQuality}</td>
+                        						
+                        					</tr>
+                                    		
+                                    		{/for}
+                        
+                        				</table>
+                         			  </td>
+                            		</tr>
+                           		</table>
+		    
+		                      </textarea>
+		                      
+		                      </td>
+		                      
+		                      <td>    <!-- graphs -->
+		                       
+		                       <div id="tblGraphs"></div>
+		                       
+		                        <textarea id="graphs_jst" style="display:none;">
+		    
+                    		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="435px">
+                        		    <tr>
+                        			  <td colspan="9" align="left">
+                        				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+                        				    <tr>								
+                        						<td class="tableHeader" style="width: 435px;" colspan="4">Graphs</td>
+                        					</tr>
+                        					<tr>								
+                        						<td class="tableCellBold" align="center">Graph ID</td>
+                        						<td class="tableCellBold" align="center">Neighbor Address 64</td>
+                        					</tr>
+                        					
+                        					{for g in graphs}
+                        					
+                        					<tr>
+                            		  		
+                        						<td class="${g.cellClass}" align="center">${g.GraphId}</td>
+                        					  	<td class="${g.cellClass}" align="center">${g.Address64}</td>
+                        					</tr>
+                                    		
+                                    		{/for}
+                        
+                        				</table>
+                         			  </td>
+                            		</tr>
+                           		</table>
+		    
+		                      </textarea>
+		                      
+		                     
+		                      
+		                      </td>
+		                      
+		                      </tr>
+		                      <tr>
+		                      
+		                      <td colspan="2">    <!-- routes -->
+		                      
+		                       <div id="tblRoutes"></div>
+		                      
+	                            <textarea id="routes_jst" style="display:none;">
+		    
+                    		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="890px">
+                        		    <tr>
+                        			  <td colspan="9" align="left">
+                        				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+                        				    <tr>								
+                        						<td class="tableHeader" style="width: 890px;" colspan="5">Routes</td>
+                        					</tr>
+                        					<tr>								
+                        						<td class="tableCellBold" align="center">Route ID</td>
+                        						<td class="tableCellBold" align="center">Alternative</td>
+                        						<td class="tableCellBold" align="center">Selector</td>
+                        						<td class="tableCellBold" align="center">Forward Limit</td>
+                        						<td class="tableCellBold" align="center">Route Element</td>
+                        						
+                        					</tr>
+                        					
+                        					{for r in routes}
+                        					
+                        					<tr>
+                            		  		
+                        						<td class="${r.cellClass}" align="center">${r.RouteId}</td>
+                        						<td class="${r.cellClass}" align="center">${r.Alternative}</td>
+                        						<td class="${r.cellClass}" align="center">${r.Selector}</td>
+                        						<td class="${r.cellClass}" align="center">${r.ForwardLimit}</td>
+                        						<td class="${r.cellClass}" align="center">${r.RouteElement}</td>
+                       							
+                        					</tr>
+                                    		
+                                    		{/for}
+                        
+                        				</table>
+                         			  </td>
+                            		</tr>
+                           		</table>
+		    
+		                      </textarea>
+		                      
+		                      </td>
+		                  </tr>		                  
+                      </table>
+		          </td>
+		      </tr>
+		    </table>
+		    
+		
+            </td></tr>
+		
+	        <tr>
+		      	<td class="spacer" colspan="1"></td>
+	  	    </tr>
+		
+    		</table>
+		    
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

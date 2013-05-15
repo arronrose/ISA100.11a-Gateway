@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />  
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="graphics/popup.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="graphics/raphael/raphael.js" charset="utf-8"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>  
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>   
+  <script type="text/javascript" src="scripts/login.js"></script>  
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript" src="scripts/firmware.js"></script>
+  <script type="text/javascript" src="sql/firmwaredal.js"></script>   
+  <script type="text/javascript" src="sql/commandsdal.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>  
+  <script type="text/javascript" src="scripts/devicefw.js"></script>   
+   
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitDeviceFwPage();">
+<div id="outer">
+<div id="inner">
+<div id="header"></div>
+<div id="content">
+<div id="columnB"></div>
+<!-- START PAGE CONTENT -->
+<div id="columnA">
+
+		    <h2>Device Firmwares</h2>
+		    <table border="0">
+		    <tr>
+		    <td>
+	        <table cellpadding="0" cellspacing="0" width="950px" border="0">           
+            <tr>
+                <td colspan="6" align="left">
+				    <input type="button" id="btnExecute" name="btnExecute" value='Execute' class="buttonSimple" onclick="NavigateToExecute();" />
+					<input type="button" id="btnFWFiles" name="btnFWFiles" value='FW Files' class="buttonSimple" onclick="NavigateToFWFiles();" />
+                </td>
+            </tr>                   
+
+            <tr>
+                <td>		    
+                <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px" border="0" style="background-color: #F0F0F0;">		               
+                <tr>
+                    <td colspan="1" class="labels" align="left" width="120px">Device</td>
+                    <td colspan="1" align="left" width="200px">
+						<input type="text" id="txtDevice" name="txtDevice" class="inputText" style="width: 160px;"/> 
+                    </td>
+                    <td colspan="1" class="labels" align="left" style="width:50px">Type</td>
+                    <td colspan="1" align="left">
+				        <select id="ddlType" name="ddlType" class="dropdown" style="width:130px"></select>
+                    </td>   
+                    <td colspan="1" align="right">
+                        <input type="button" id="btnSearch" value="Search" class="buttonFilter" onclick="Search();" />
+                    </td>                    
+                </tr>
+              
+                 <tr>
+                    <td colspan="1" class="labels" align="left">Download Status</td>
+                    <td colspan="1" align="left">
+				        <select id="ddlDownloadStatus" name="ddlDownloadStatus" class="dropdown" style="width: 164px;" ></select>
+                    </td>
+					<td colspan="2" class="labels">
+                        <input type="checkbox" id="chkRefresh" name="chkRefresh" onclick="enableDisableRefresh(this.checked);" />&nbsp;Refresh every 1 minute
+                    </td>
+                    <td colspan="1" align="right">
+                        <form name="form1" action="/rpc.cgi" method="POST" target="iFrame">
+                            <input type="hidden" id="hQuery" />
+                            <input type="hidden" id="call1" name="call1" />                                      		    
+                            <input type="submit" id="btnExport" value="Export" class="buttonFilter" onclick="Export();" />                            
+                        </form>
+                        <iframe src="about:blank" id="iFrame" name="iFrame" style="display:none;"></iframe>					                    
+                    </td>
+                 </tr>
+            </table>		    
+		    </td></tr>
+		    
+		   <tr>
+		       <td class="spacer" colspan="6"></td>
+		   </tr>
+		    
+		    <tr><td>
+		    		    
+		    <table width="100%" border="0" class="tableHeader">
+                <tr>	
+                    <td align="left" class="labels" style="color:#FFFFFF">
+			       	    Items per page
+	                    <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 60px;" onchange="Search()"> 
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+	                    </select>
+						<span id="spnTotalNoOfRows"></span> 
+	                </td>					   	
+    			    <td align="right">    			    	  
+    				    <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+    					<a id="anchorPrev">&lt;</a>&nbsp;
+    					<span id="spnPageNumber"></span>&nbsp;
+    					<a id="anchorNext">&gt;</a>&nbsp;
+    					<a id="anchorLast">&gt;&gt;</a>&nbsp;
+                    </td>
+                </tr>
+            </table>
+		    
+		    <div id="tblFirmwareDownloads" style="text-align: center;"></div>
+		    <textarea id="fwdownload_jst" style="display:none;">
+		    
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="950px">
+		    <tr>
+			  <td colspan="9" align="left">
+
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">					
+					<tr>								
+						<td class="tableSubHeader" style="width: 150px;" align="center"><a href="javascript:ChangeOrderBy(1)" class="white">EUI-64 Address<span id="col1"></span></a></td>
+						<td class="tableSubHeader" style="width: 110px;" align="left">Type</td>
+						<td class="tableSubHeader" style="width: 80px;" align="left">Status</td>
+						<td class="tableSubHeader" style="width: 100px;" align="left">Completed(%)</td>						
+						<td class="tableSubHeader" style="width: 85px;" align="center">Avg Speed (msg/min)</td>						
+						<!-- <td class="tableSubHeader" style="width: 85px;" align="center">Crt Speed (msg/min)</td> -->
+						<td class="tableSubHeader" style="width: 85px;" align="center">Remaining (hh:mm:ss)</td>
+	        			<td class="tableSubHeader" style="width: 85px;" align="center">Duration (hh:mm:ss)</td>
+						<td class="tableSubHeader" style="width: 140px;" align="center"><a href="javascript:ChangeOrderBy(2)" class="white">Started On<span id="col2"></span></a></td>
+						<!--td class="tableSubHeader" style="width: 10px;" align="center"><a href="javascript:ChangeOrderBy(3)" class="white">Completed On<span id="col3"></span></a></td-->
+						<td class="tableSubHeader" style="width: 30px;" align="center">&nbsp;</td>
+					</tr>
+					
+                    {for f in fwDownloads}
+					
+					<tr>
+						<td class="${f.cellClass}" style="width: 150px;" align="center">${f.Address64}</td>
+						<td class="${f.cellClass}" style="width: 110px;" align="left">${f.Type}</td>						
+						<td class="${f.cellClass}" style="width: 80px;" align="left">${f.Status}</td>
+						<td class="${f.cellClass}" style="width: 100px;" align="left">${f.DivName}</td>
+						<td class="${f.cellClass}" style="width: 85px;" align="center">${f.AvgSpeed}</td>						
+						<!--td class="${f.cellClass}" style="width: 85px;" align="center">${f.CrtSpeed}</td>  -->
+						<td class="${f.cellClass}" style="width: 85px;" align="center">${f.RemainingTime}</td>
+						<td class="${f.cellClass}" style="width: 85px;" align="center">${f.Duration}</td>
+						<td class="${f.cellClass}" style="width: 140px;" align="center">${f.StartedOn}</td>
+						<!--td class="${f.cellClass}" style="width: 10px;" align="center">${f.CompletedOn}</td-->
+						<td class="${f.cellClass}" style="width: 30px;" align="center">${f.CancelIcon}</td>						
+            		</tr>
+            		
+            		{/for}
+            		
+            		<tr>								
+    					<td class="tableHeader" colspan="9" align="right">&nbsp;</td>
+					</tr>					
+				</table>			
+ 			</td>
+    		</tr>
+    		</table>		    
+		    </textarea>
+		    </td></tr>
+            </table>              
+            </td></tr>
+	      <tr>
+		      	<td class="spacer" colspan="2"></td>
+		  </tr>
+		  <tr>
+    		<td align="center">
+    			<span id="spnOperationResultAdd" style="color:#00000000;"></span>
+            </td>
+    	  </tr>		   		   
+		  </table>		    		  
+		  </div>
+	<div id="modalPopup" style="border:3px solid black; background-color:#DDDDFF; padding:25px; text-align:center; display:none;">
+		<span id="popupTitle" class="tableCellBold">Tracking Response</span><br />
+		<div id="popupContent" class="tableCell" style="border:1px solid black; width: 400px; height: 250px; text-align:left; word-wrap:break-word; overflow-x:hidden; overflow-y:auto;"></div><br />
+		<input type="button" value="Close" onclick="javascript:Popup.hide('modalPopup')" />
+	</div>		  	
+<!-- END PAGE CONTENT -->
+</div>
+</div>
+</div>
+<div id="footer"></div>
+</body>
+</html>

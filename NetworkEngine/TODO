@@ -1,0 +1,82 @@
+30.06.2010
+*-rutare: daca un device renunta la un backup, sa nu-l lasam nici pe backup sa-l faca imediat pe device backup al lui
+23.03.2010
+*- alerte SM->GW pe on-change detalii din rapoarte. La schimbare info din rapoarte SM trimite alerta la GW (cu detalii desre modificare) 
+si GW cere din nou raportul respectiv.
+*- alerte SM->GW cu statusul firmware-upload: la fiecare 5% din upload SM trimite alerta la GW. 
+*- modificare perioada advertise dinamica a ruterelor pline
+- modificare dinamica a erioadei de advertise pe masura ce apar routere noi in sistem: modificare pt suportul actual pt mai multe de 
+24 router (in care se modifica offsetul de frecventa pt routerele peste 24), posibil sa imbunatateasca timpul de join 
+*(breach unlock_capabilities)- modificare join request (capabilities in requestul de join)
+- rezolvare isssu cu publish DO1 gol sau inconsistent pentru IO. Momentan rezolvat din device prin marire de la 2 la 3 a nuamrului de 
+diagnostice suportate (metadata). Trebuie rezolvat din SM pcin serializare operatii neighbor pe change de la diagLevel 2(sau 1) la 0 inainte de 
+change de la 0 -> 2 (sau 1).
+- UDO state machine is not consistent with standard (Change to DOWNLOADING state should not be done imediately after start of teh session)
+- Fix disable alert: tre sa aiba flaguri in config pt fiecare tip si in cazul in care se face disable la alerte sa se trimita si la device dezactivarea
+- Firmware update with TaiCutover (see issue http://portal.nivis.com/sites/ISA100/D2A/Lists/Issues1/DispForm.aspx?ID=481 )
+- Localloop between subnets  
+
+04.01.2010
+- optimizare contract <= 1 sec. Mutare sloturi pentru contractele mai putin constringatoare.
+- optimizare routing outbound: minimizare numar graphuri ( toate IO care au cai prin aceleasi 2 routere (parent, backup) sa foloseasca acelasi 
+graph outbound, eventual fortare a deviceurilor prin acelasi parent sa foloseasca acelasi backup daac e posibil)
+*- suport unit test for 50 more devices
+- rulare unit teste pe VR900 si verificare load/timp raspuns...
+- testare real pe setup de 100 
+?- verificare prin unit-test si calcul matematic a limitelor sistemului (diferite configuratii).
+
+
+
+16.10.2009
+* Scenariu: join devices, evaluate routes/graphs, adaugare edgeuri redundante: trebuie alocate linkuri MANAGEMENT pentru aceste edgeuri
+- Scenariu: join devices, evaluate routes/graphs, adaugare edgeuri redundante: trebuie alocate linkuri  APP pentru aceste edgeuri. 
+		Parcurse toate contractele care trec prin edge.source si alocat trafic pe acest edge conf. document 
+* implementaare alocare linkuri APP: redundant and retries
+- implementare reducere linkuri pentru APP 
+
+* (14.6.16) re-configurare publish dupa ce un nod are 2 vecini(momentan se configureaza imediat dupa join cind are vecin numai parintele)
+
+* Descriere func Garbage Collector   
+* Implement func Garbage Collector
+* (14.6.16) Costurile pentru routing
+
+* (14.6.16) updatare metadata pe masura ce se alloca resurse
+* (14.6.16) verificari ale metadata inainte de/dupa o alocare de resurse. Refuz procesare eveniment daca nu ma sunt resurse.
+
+*(14.6.5) la expirarea de keySoftLifetime tre facut update de cheie pt device (session key, dl key, master key)
+*(14.6.5) key expiration - cautare si stergere de chei expirate din model
+* key generation: folosire de ceva algorithmi mai random (vezi comentarii honeywell)
+
+- verificare memory leak cu valgrind. corectie errori raportate de valgrind
+- verificare timpi de apel cu callgrind. 
+
+-revizuire warninguri/TODO de compilare
+-revizuire clase neutilizate/comentate
+
+- schimbari in logging: ce mai trebuie logat, ce trebuie scos, logari care pot fi parametrizate si dezactivate/activ la runtime:
+		a. lista de operatii dintr-un container la adaugare in OperProcessor. Trebuie sa se afiseze toata lista undeva intr-un fisier 
+		separat sau chiar in smOperations.log (cu un marker inainte/dupa block sau pe fiecare operatie)
+		b. trebuie scoasa logare containerului din methodele din OperProcess la fiecare apel de methoda
+
+- creare scenarii de UnitTest cu puncte de validare pentru fiecare scenariu.. si implementate 
+- creare scripturi pentru rulare automata a testelor periodic si instalate pe un server (update svn, build, run, salvare rezultate intr-un 
+	fishier txtx/html si expuse intr-un folder accesibil web (prin apache) )
+	
+- (optimizare)functii de tip get/set sau functi care au ca implementare cod simplu max 1 linie trebuie implementate in .h (functiile devin implicit inline)
+* (optimizare)in subnet membri manager&gateway mutati in tabela subnetNodes in index 1 si 2. In destructor nu se distruge manager si gateway (acestea vor fi distruse de NetworkEngine)
+*- adaugare protectie de NULL peste tot unde se apeleaza functii care returneaza *. Daca se primeste * ca parametru NU se face verificare (aceasta trebuie sa o faca apelatorul).
+
+*- la reload de system_manager.ini delete de deviceuri care nu  mai is provisionate
+?(14.6.5) local loop contracts
+* (14.6.1???) suport for multiple subnets (1 backbone / subnet)
+*(14.6.5) la reload sm_subnet.ini si schimbare perioada advertise : trebuie schimbate in cimp linkurile de pe deviceurile joinate
+*- decrease banda management si app
+* (14.6.16) terminate de contract
+- lista cu asociere power-consumption - numar sloturi alocate, power-consumption - perioada advertise, ... 
+* (14.6.16) revizuire funct blacklist
+* (14.6.16) forwardare alerte
+* (14.6.16) Issue: la reload de system_manager.ini: daca s-a adaugat un nou BBR trebuie creata instanta de subnet. Sau daca s-a schimbat subnetID-ul pentru un BBR.
+- recuperare deviceuri care nu au redundanta pe outbound (source routing pe BBR)
+- methoda SMO - get CCA backoff --- integrare cu MH
+*(14.6.5) remove device after inactivity (2 min default)
+   

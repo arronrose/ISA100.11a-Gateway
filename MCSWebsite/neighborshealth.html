@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/template.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/devicetabs.js"></script>
+  <script type="text/javascript" src="scripts/date.format.js"></script>
+  <script type="text/javascript" src="scripts/device.js"></script>
+  <script type="text/javascript" src="scripts/reports.js"></script>
+  <script type="text/javascript" src="sql/devicedal.js"></script>
+  <script type="text/javascript" src="sql/reportsdal.js"></script>
+  <script type="text/javascript" src="scripts/neighborshealth.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>  
+  <script type="text/javascript" src="scripts/command.js"></script>
+  <script type="text/javascript" src="sql/commandsdal.js"></script>  
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitNeighborsHealthPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        	<div id="columnA">
+		    <h2>Device Details</h2>
+		    
+		    <table cellpadding="0" cellspacing="0" border="0"><tr><td>
+		    
+            <table cellpadding="0" cellspacing="0" width="900px" border="0">
+              <tr align="center">
+		          <td width="70px" id="tab0"></td>
+    		      <td width="60px" id="tab1"></td>
+	   	          <td width="110px" id="tab2"></td>
+  	   	          <td width="120px" id="tab3"></td>
+   	              <td width="110px" id="tab4"></td>
+		          <td width="130px" id="tab5"></td>
+		          <td width="100px" id="tab6"></td>
+		          <td class="tabButton">&nbsp;</td>
+		      </tr>
+		    </table> 
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="900px">
+	       	   <tr>
+		      	 <td colspan="2" align="left">
+			     	<table width="100%" cellpadding="0" cellspacing="0">
+				    	<tr>								
+					       	<td class="windowHeader"></td>
+    					</tr>
+	       			</table>
+	   	       	</td>
+    		  </tr>
+    		  
+    		  <tr>
+			    <td colspan="1" class="labels" align="left">
+    			   <strong>EUI-64 Address: </strong><span id="spnEUI64"></span><br />
+   			   	   <strong>IPv6 Address: </strong><span id="spnIPv6"></span><br />
+			    </td>
+			    <td colspan="1" align="right" valign="top">
+			         <input type="button" id="btnBack" value='Back' class="buttonFilter" onclick="BackButtonClicked();" />
+			    </td>
+		      </tr>
+	      
+              <tr><td colspan="2"><hr /></td></tr>
+              
+              <tr>
+                <td colspan="1" class="labels" align="left">
+                    <strong>Last refreshed on UTC: </strong><span id="spnRefreshDate"></span>
+                </td>
+	            <td colspan="1" align="right">
+	                <input type="button" id="btnRefresh" name="btnRefresh" value='Refresh' class="buttonFilter" onclick="RefreshPage();" />
+	            </td>
+              </tr>
+	      
+		      <tr align="center">
+                <td colspan="2">
+                  <table cellpadding="0" cellspacing="0" width="99%" border="0">
+		            <tr><td class="spacer" colspan="6"></td></tr>
+                    <tr>
+                      <td align="left">
+		    
+		        <table width="100%" border="0" class="tableHeader">		       
+                <tr>	
+			        <td align="left" class="labels" style="color:#FFFFFF">
+			       	    Items per page
+	                    <select id="ddlRowsPerPage" name="ddlRowsPerPage" class="dropdown" style="width: 60px;" onchange="RowsPerPageChanged()"> 
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+	                    </select> 
+						<span id="spnTotalNoOfRows"></span>
+	                 </td>   					
+                    <td align="right">
+    				    <a id="anchorFirst">&lt;&lt;</a>&nbsp;
+    					<a id="anchorPrev">&lt;</a>&nbsp;
+    					<span id="spnPageNumber"></span>&nbsp;
+    					<a id="anchorNext">&gt;</a>&nbsp;
+    					<a id="anchorLast">&gt;&gt;</a>&nbsp;
+                    </td>
+                </tr>
+                </table>
+		    
+		    <div id="tblNeighborsHealth" align="center"></div>
+		    
+		    <textarea id="neighborshealth_jst" style="display:none;">
+		    
+		    <table cellpadding="0" cellspacing="0" class="containerDiv" width="100%">
+		    <tr>
+			  <td align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+    					<td class="tableSubHeader" style="width: 200px;" align="center"><a href="javascript:ChangeOrderBy(1)" class="white">Neighbor<span id="col1"></span></a></td>
+						<td class="tableSubHeader" style="width: 150px;" align="center">Link status</td>
+						<td class="tableSubHeader" style="width: 140px;" align="center">Transmitted/Failed</td>
+						<td class="tableSubHeader" style="width: 140px;" align="center">Received/Failed</td>
+						<td class="tableSubHeader" style="width: 150px;" align="center">Signal Strength(dBm)</td>
+						<td class="tableSubHeader" style="width: 120px;" align="center">Signal Quality</td>
+					</tr>
+					
+                    {for nh in neighborshealth}
+					
+					<tr>
+						<td class="${nh.cellClass}" align="center">${nh.NeighborAddress64}</td>
+                        <td class="${nh.cellClass}" align="center">${nh.LinkStatus}</td>
+						<td class="${nh.cellClass}" align="center">${nh.TransmittedAndFailed}</td>
+						<td class="${nh.cellClass}" align="center">${nh.ReceivedAndFailed}</td>
+                        <td class="${nh.cellClass}" align="center">${nh.SignalStrength}</td>
+                        <td class="${nh.cellClass}" align="right">${nh.SignalQuality}</td>                       
+            		</tr>
+            		
+            		{/for}
+            		
+            		<tr>
+    					 <td class="tableHeader" colspan="7" align="right">&nbsp;</td>
+					</tr>
+					
+				</table>
+ 			  </td>
+    		</tr>
+    		</table>
+		    
+		    </textarea>
+		    
+                            </td>     
+                        </tr>
+                        <tr>
+			                <td class="spacer" colspan="2"></td>
+                        </tr>
+                    </table>
+		          </td>
+                </tr>                  
+		      </table>
+		    </td>
+          </tr>
+		</table>
+		    
+		  	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+########################## start file ##################################
+
+[ SYSTEM_MANAGER]
+    MAX_LOG_SIZE = 2048 
+    
+    FIRMWARE_FILES_DIRECTORY = /access_node/activity_files/devices_fw_upgrade/
+    
+    CHANNEL_BLACKLISTING_ENABLED=false
+    
+    CURRENT_UTC_ADJUSTMENT = 34
+    NEXT_UTC_ADJUSTMENT_TIME = 0
+    NEXT_UTC_ADJUSTMENT = 34
+    
+    SUBNET_CONFIG_FILE = sm_subnet.ini
+    
+    PS_CONTRACTS_REFUSAL_TIME_SPAN=900
+    PS_CONTRACTS_REFUSAL_DEVICE_TIME_SPAN=360
+
+    
+###################################### end of file ##########################

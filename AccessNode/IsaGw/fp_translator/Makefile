@@ -1,0 +1,42 @@
+#
+# Copyright (C) 2013 Nivis LLC.
+# Email:   opensource@nivis.com
+# Website: http://www.nivis.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# Redistribution and use in source and binary forms must retain this
+# copyright notice.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+
+
+export TOP:=../..
+
+-include $(TOP)/sys_inc.mk
+
+
+fp_translator.FILES   = FptApp FptCfg fp_translator
+
+fp_translator.CXXFLAGS=  -I$(TOP) -I../ -I. $(BOOST_CXXFLAGS) 
+
+fp_translator.LDFLAGS = $(SHRD_LIB_LINK)  
+fp_translator.SUBDIRS = $(SHRD_DIR)  
+
+
+TARGET.PROGRAMS = fp_translator
+
+include tunnel/tunnel.mk
+
+include $(TOP)/system.mk

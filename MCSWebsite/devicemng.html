@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/devicemng.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitDeviceMngPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+	    <div id="columnA">
+		<h2>Device Management</h2>
+		
+		<table><tr><td>
+		
+		<table width="945px" cellpadding="0" cellspacing="0"> <!-- main table, 3 sections | device format -->
+		<tr  valign="top"><td>
+		
+		
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="550px">
+				
+		 <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader" colspan="2">Backbones</td>
+						<td align="right" class="windowHeader"><a class="white" title="Device formats" href="javascript:ShowHideHelp('open');">Help</a>&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<select id="lstBackbones" name="lstBackbones" size="2" class="inputText" style="width: 528px;" onchange="EditBackbone();"></select>
+			</td>	
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<input type="text" id="txtBackbone" name="txtBackbone" maxlength="73" class="inputText" style="width: 525px;" 
+                title="Format: &lt;EUI64&gt;,&lt;Key&gt;,&lt;Subnet&gt;" />&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan='2' align='center'>
+						<input type="button" id="btnSaveBackbone" name="btnSaveBackbone" value='Save' class="button" onclick="SaveBackbone();" onblur="ClearOperationResults()"/>
+						<input type="button" id="btnDeleteBackbone" name="btnDeleteBackbone" value='Delete' class="button" onclick="DeleteBackbone();" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResultBackbone"></span>
+            </td>
+		</tr>
+
+		 <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader" colspan="2">Gateways</td>
+						
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<select id="lstGateways" name="lstGateways" size="1" class="inputText" style="width: 528px;" onclick="EditGateway();"></select>
+			</td>	
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<input type="text" id="txtGateway" name="txtGateway" maxlength="73" class="inputText" style="width: 525px;" 
+                title="Format: &lt;EUI64&gt;,&lt;Key&gt;,&lt;Subnet&gt;" />&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan='2' align='center'>
+						<input type="button" id="btnSaveGateway" name="btnSaveGateway" value='Save' class="button" onclick="SaveGateway();" onblur="ClearOperationResults()" />
+						<input type="button" id="btnDeleteGateway" name="btnDeleteGateway" value='Delete' class="button" onclick="DeleteGateway();" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+        <tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResultGateway"></span>
+            </td>
+		</tr>						
+		   <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader" colspan="2">Devices</td>
+						
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<select id="lstDevices" name="lstDevices" size="6" class="inputText" style="width: 528px;" onchange="EditDevice();"></select>
+			</td>		
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				<input type="text" id="txtDevice" name="txtDevice" maxlength="95" class="inputText" style="width: 525px;" 
+                title="Format: &lt;EUI64(-EUI64)&gt;,&lt;Key&gt;,&lt;Subnet&gt;,&lt;Role&gt;" />&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan='2' align='center'>
+						  <input type="button" id="btnSaveDevice" name="btnSaveDevice" value='Save' class="button" onclick="SaveDevice();" onblur="ClearOperationResults()" />
+						  <input type="button" id="btnDeleteDevice" name="btnDeleteDevice" value='Delete' class="button" onclick="DeleteDevice();" />
+					    </td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResultDevice"></span>
+            </td>
+		</tr>
+
+		 <tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Manage device list</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<form name="form1" action="/rpc.cgi" enctype="multipart/form-data" method="post" target="iFrame">
+   				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+				    <tr>
+				     <td class="labels">
+			                            Upload devices ...
+                		<input type='hidden' name='call1' id='call1'/>
+                        <input type='file' id="smFile" name='figure2' value='2' size="40" style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; border: solid 1px #000000;" 
+                            onkeydown="return false;" onkeypress="return false;" onkeyup="return false;" />
+                    </td>
+                    <td>
+                        <input type="submit" id="btnUpload" value='Upload' class="button" onclick="return Upload();" />
+		   		   </td>
+				    </tr>
+		      		<tr>							
+                        <td class="labels">
+                             Download devices
+                        </td>	
+						<td align='center'>
+       	              	<input type="submit" id="btnDownload" value='Save' class="button" onclick="Download();" />
+					</td>
+					</tr>
+					<tr>							
+                        <td class="labels">
+                             Load the new device list into System Manager
+                        </td>	
+						<td align='center'>
+						<input type="button" id="btnActivate" value='Activate' class="button" onclick="Activate();" onblur="ClearOperationResults()" />
+					</td>
+					</tr>
+				</table>
+                </form>
+                <iframe src="about:blank" id="iFrame" name="iFrame" style="display:none;"></iframe>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResultActivate"></span>
+            </td>
+		</tr>
+            
+		</table>
+		
+		
+		</td>
+        
+  		<td align="left" style="background-color: #F0F0F0;">
+    			<div id="divHelp" class="labels" style="display: none; width='100%'; font-size :9px;">
+				<b>Device Format (all sections):</b> &lt;EUI64(-EUI64)&gt;,&lt;Key&gt;,&lt;Subnet&gt;,&lt;Role&gt;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>EUI64:</b> 8 bytes grouped by 2, represented as hex, separated by colons<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>Key:</b> 16 bytes, represented as hex, can be separated by spaces,<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>Subnet:</b> integer in range [0-65535]<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>Role:</b> integer in range [0-65535]<br />
+				<b>Examples with one EUI64:</b><br />
+                <b>Example1:</b> 6202:0304:0506:FC00,C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF,3,10 <br />
+                <b>Example2:</b> 6202:0304:0506:FC00,'C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF',3,10 <br />
+                <b>Example3:</b> 6202:0304:0506:FC00,C0C1C2C3C4C5C6C7C8C9CACBCCCDCECF,3,10 <br />
+                <b>Example4:</b> 6202:0304:0506:FC00,'C0C1C2C3C4C5C6C7C8C9CACBCCCDCECF',3,10 <br /><br />
+				<b>Examples with EUI64 range:</b> <br />
+                <b>Example5:</b> 6202:0304:0506:FC00 - 6202:0304:0506:FC0F,C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF,3,10 <br />
+                <b>Example6:</b> 6202:0304:0506:FC00 - 6202:0304:0506:FC0F,'C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF',3,10 <br />
+                <b>Example7:</b> 6202:0304:0506:FC00 - 6202:0304:0506:FC0F:FC00,C0C1C2C3C4C5C6C7C8C9CACBCCCDCECF,3,10 <br />
+                <b>Example8:</b> 6202:0304:0506:FC00 - 6202:0304:0506:FC0F,'C0C1C2C3C4C5C6C7C8C9CACBCCCDCECF',3,10 <br /><br />
+
+                  <table width="100%">
+                    <tr>
+                        <td align="right">
+                            <a title="Close" href="javascript:ShowHideHelp('close');">Close</a>&nbsp;<br />
+                        </td>
+                    </tr>
+                </table>
+                </div>
+  			</td>
+        
+        </tr>
+        </table>    <!-- main table, 3 sections | device format -->
+		
+				</td></tr>
+		
+	    <tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		
+		</table>
+		
+		
+	   </div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

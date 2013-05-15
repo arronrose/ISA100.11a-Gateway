@@ -1,0 +1,45 @@
+########################## start file ##################################
+#TODO: REPLACE AN ID WITH YOUR AN ID (lower 3 bytes, hex)
+
+[ GLOBAL ] #____________________ GLOBAL - General settings ____________#
+
+
+	var_to_del_example = ""
+
+[ SYSTEM_MANAGER ]
+############
+# This properties will be deleted from config.ini if are found in the VR900 where this release will be installed
+############
+    
+    PUBLISH_PERIOD = 60
+    PUBLISH_PHASE = 50
+    
+    CHANNEL_BLACKLISTING_ENABLED = true
+    CHANNEL_BLACKLISTING_THRESHOLD_PERCENT = 55
+    CHANNEL_BLACKLISTING_KEEP_PERIOD = 600 		
+    CHANNEL_BLACKLISTING_TAI_CUTOVER = 10 
+    
+    ALERTS_ENABLED = true
+    ALERT_NEIGHBOR_MINUNICAST = 5
+    ALERT_NEIGHBOR_ERROR_THRESHOLD = 35
+    ALERT_CHANNELDIAG_MINUNICAST = 5
+    ALERT_CHANNELDIAG_CCABACKOFF_THRESHOLD = 50
+    ALERT_CHANNELDIAG_NOACK_THRESHOLD = 50
+    
+    SECURITY_KEY_LIFETIME = 1776 
+    
+    GW_MAX_NSDU_SIZE = 32767
+    MAX_NSDU_SIZE = 96 
+    
+    FILE_UPLOAD_CHUNK_SIZE = 72 
+    FILE_UPLOAD_CHUNK_TIMEOUT = 45 
+    
+    SECURITY_KEY_NOTVALIDBEFORE = 24 # hours - offset from the set key receive time.
+
+    COMMITTED_BURST = 1
+    EXCESS_BURST = 1
+    
+    LOG_NETWORK_STATE_INTERVAL = 30   # time interval to log the network engine states (seconds)
+    DEBUG_COMMANDS_FILENAME = sm_command.ini   # read attributes, print topology etc commands
+   
+    		

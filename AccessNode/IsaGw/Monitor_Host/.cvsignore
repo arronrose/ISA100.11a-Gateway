@@ -1,0 +1,10 @@
+Monitor_Host.db3
+*.stackdump
+Cygwin_Release
+Cygwin_Debug
+run.bat
+out
+dist
+deploy-test
+out-dist
+test-deploy

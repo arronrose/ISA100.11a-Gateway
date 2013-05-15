@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <link href="styles/default.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script type="text/javascript" src="scripts/validation.js"></script>
+  <script type="text/javascript" src="scripts/appsettings.js"></script>
+  <script type="text/javascript" src="scripts/advanced.js"></script>
+  <script type="text/javascript" src="jsolait/jsolait.js"></script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript">loadjscssfile();</script>
+  
+  <!--[if (lte IE 6)|(gte IE 8)]>
+  <style type="text/css">
+     #outer {height:100%;display:table;}
+  </style>
+  <![endif]-->
+
+</head>
+
+<body onload="InitAdvancedPage();">
+
+<div id="outer">
+    <div id="inner">
+        <div id="header"></div>
+
+        <div id="content">
+           	<div id="columnB"></div>
+
+        <!-- START PAGE CONTENT -->
+        
+        <div id="columnA">
+		<h2>Advanced Settings</h2>
+		
+		<table><tr><td>
+		
+		<table cellpadding="0" cellspacing="0" class="containerDiv" width="460px">
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Sections/variables</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				Configuration &nbsp;...................................&nbsp;
+				<select id="ddlConfiguration" class="dropdown" onchange="ConfigurationChanged();" style="width: 205px;"> 
+                    <option id="System">System</option>
+                    <option id="All_subnets">All subnets</option>
+                    <option id="Subnet">Subnet</option>
+                </select>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+			  <span id="spnSubnet" style="display: none;">
+				Subnet ID &nbsp;........................................&nbsp;
+				<input type="text" id="txtSubnet" maxlength="5" class="inputText" style="width: 205px;" onblur="SubnetChanged()"/>
+			  </span>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				Variable type &nbsp;...................................&nbsp;
+		
+				<input type="radio" id="rbVariableTypeStandard" name="rbVariableType" value="1" checked="checked" onclick="VariableTypeChanged('1');" />Standard 
+                <input type="radio" id="rbVariableTypeCustom" name="rbVariableType" value="2" onclick="VariableTypeChanged('2');" />Custom
+			</td>
+		</tr>		<tr>
+			<td class="labels" align="left" colspan="2">
+				Section &nbsp;............................................&nbsp;
+				<select id="ddlSection" class="dropdown" onchange="PopulateVariables();" style="width: 205px;"></select>
+				<input type="text" id="txtSection" maxlength="50" class="inputText" style="display: none; width: 201px;"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				Variable &nbsp;.............&nbsp;
+				<select id="ddlVariable" class="dropdown" onchange="PopulateVariableValue();" style="width: 324px;"></select>
+				<input type="text" id="txtVariable" maxlength="50" class="inputText" style="width: 320px; display: none;" />
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2">
+				Value &nbsp;.................&nbsp;
+                <input type="text" id="txtValue" maxlength="50" class="inputText" style="width: 319px;"/>
+			</td>
+		</tr>	
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan='2' align='center'>
+						<input type="button" id="btnSetVariable" value='Set' class="button" onclick="SetVariable();" />
+						<input type="button" id="btnCancel" value='Cancel' class="button" onclick="ResetSectionsVariables();" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnSetResult"></span>
+            </td>
+		</tr>
+
+		<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*The associated application must be restarted for the new settings to take effect.
+			</td>
+		</tr>
+		
+		
+		<tr>
+			 <td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">Restart</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+		  <td colspan="2">
+
+          <table>
+          <tr>  
+			<td class="labels" align="left">
+				Backbone Restart &nbsp;
+			</td>
+			<td align="left">
+				<input type="button" id="btnRestartBBR" value='Restart' class="buttonRestart" onclick="RestartBackbone();" onblur="ClearOperationResults()" />
+			</td>
+		    
+       		<td class="labels" align="left">
+				System Manager Restart &nbsp;
+			</td>
+			<td align="left">
+				<input type="button" id="btnRestartSM" value='Restart' class="buttonRestart" onclick="RestartSystemManager();" onblur="ClearOperationResults()" />	
+			</td>  
+    
+		</tr>
+		<tr>
+	    	<td class="labels" align="left">
+				Gateway Restart &nbsp;
+			</td>
+			<td align="left">
+				<input type="button" id="btnRestartGW" value='Restart' class="buttonRestart" onclick="RestartGateway();" onblur="ClearOperationResults()" />	
+			</td>
+			<td class="labels" align="left">
+				Monitoring Host Restart &nbsp;
+			</td>
+			<td align="left">
+				<input type="button" id="btnRestartMH" value='Restart' class="buttonRestart" onclick="RestartMH();" onblur="ClearOperationResults()" />
+			</td>
+
+        </tr>		
+		<tr>
+			<td class="labels" align="left">
+				MODBUS Restart &nbsp;
+			</td>
+			<td align="left">
+				<input type="button" id="btnRestartModbus" value='Restart' class="buttonRestart" onclick="RestartModbus();" onblur="ClearOperationResults()" />
+			</td>
+            <td class="labels" align="left">
+                VR900 Hardware Restart &nbsp;
+            </td>
+            <td align="left">
+                <input type="button" id="btnRestartVR900" value='Restart' class="buttonRestart" onclick="RestartVR900();" onblur="ClearOperationResults()" />   
+            </td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">
+				Restart Applications &nbsp;
+			</td>
+			<td align="left">
+				<input type="button" id="btnRestartApp" value='Restart' class="buttonRestart" onclick="RestartApplications();" onblur="ClearOperationResults()" />
+			</td>
+			<td class="labels" align="left">
+			</td>
+			<td align="left">
+			</td>
+		</tr>
+        </table>
+		
+		  </td>
+		</tr>
+		
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>	
+		
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnRestartResult"></span>
+            </td>
+		</tr>
+		
+    	<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*After a restart the VR900 Monitoring Control System becomes inoperable for a few minutes.
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td class="windowHeader">VR900 Settings</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>				
+		<tr>
+			<td class="labels" align="left">
+				IP &nbsp;.......................................&nbsp;
+			</td>
+			<td align="left">
+				<input type="text" id="txtIP" maxlength="50" class="inputText"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">
+                Gateway &nbsp;..............................&nbsp;
+			</td>
+			<td align="left">
+				<input type="text" id="txtGateway" maxlength="50" class="inputText"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="labels" align="left">
+				Mask &nbsp;...................................&nbsp;
+			</td>
+			<td align="left">
+				<input type="text" id="txtMask" maxlength="50" class="inputText"/>
+			</td>
+		</tr>	
+        <tr>
+            <td class="labels" align="left">
+                MAC0 &nbsp;...................................&nbsp;
+            </td>
+            <td align="left">
+                <input type="text" id="txtMAC0" maxlength="50" class="inputText" disabled="true"/>
+				<input type="checkbox" id="ckMAC" onclick="EditMAC()" style="vertical-align:top;"/>
+				<span class="labels" id="spnUpdateMac" style="padding:  2px 0px 2px 1px">Update MAC</span>
+            </td>
+        </tr>   
+        <tr>
+            <td class="labels" align="left">
+                MAC1 &nbsp;...................................&nbsp;
+            </td>
+            <td align="left">
+                <input type="text" id="txtMAC1" maxlength="50" class="inputText" disabled="true"/>
+            </td>
+        </tr>   
+
+		<tr class="spacer"></tr>
+        <tr valign="top">
+    	    <td class="labels" align="left" >
+		        Name Servers &nbsp;.....................&nbsp;
+	        </td>
+	        <td>
+	            <table cellpadding="0" cellspacing="0" >
+	                <tr >
+	                    <td>
+		                    <select id="lstNameServers" size="2" class="inputText" onchange="SelectNameServer()" style="width:154px"></select>
+	                    </td>
+                        <td>
+   	                        <input type="button" id="btnDeleteNameServer" value='Delete' class="buttonSimple" onclick="DeleteServerName();"/>
+   	                    </td>    
+   	                </tr>	
+   	                
+                    <tr>
+                        <td>
+            	            <input type="text" id="txtNameServer" maxlength="15" class="inputText"/>
+			            </td>
+                        <td>
+                           <input type="button" id="btnSaveNameServer" value='Add' class="buttonSimple" onclick="SaveServerName();" />			 
+                        </td>
+                    </tr>		
+   	            </table>    
+   	        </td>
+        </tr>
+        <tr class="spacer"></tr>
+        <tr valign="top">
+    	    <td class="labels" align="left" >
+		        NTP Servers &nbsp;........................&nbsp;
+	        </td>
+	        <td>
+	            <table cellpadding="0" cellspacing="0" border="0">
+	                <tr >
+	                    <td>
+		                    <select id="lstNTPServers" size="2" class="inputText" onchange="SelectNTPServer()" style="width:154px"></select>
+	                    </td>
+                        <td>
+   	                        <input type="button" id="btnDeleteNTPServer" value='Delete' class="buttonSimple" onclick="DeleteNTPServer();"/>
+   	                    </td>    
+   	                </tr>	
+   	                
+                    <tr>
+                        <td>
+            	            <input type="text" id="txtNTPServer" maxlength="15" class="inputText"/>
+			            </td>
+                        <td>
+                           <input type="button" id="btnSaveNTPServer" value='Add' class="buttonSimple" onclick="SaveNTPServer();" />			 
+                        </td>
+                    </tr>		
+   	            </table>    
+   	        </td>
+        </tr>
+			
+		<tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>								
+						<td colspan='2' align='center'>
+						<input type="button" id="btnSaveGateway" value='Save' class="button" onclick="SetVR900Settings();" onblur="ClearOperationResults()" />
+						<input type="button" id="btnCancelGateway" value='Cancel' class="button" onclick="GetVR900Settings();" />
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+		      <span id="spnOperationResult"></span>
+            </td>
+		</tr>
+ 	    <tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		<tr>
+			<td class="labels" align="left" colspan="2" style="font-size :9px;">
+				*The board must be restarted for the new settings to take effect. If the IP address is changed, 
+                after reset the board will be accessible with the new IP and will no longer be reachable at the previous IP.
+			</td>
+		</tr>
+		</table>
+		
+		</td></tr>
+		
+	    <tr>
+			<td class="spacer" colspan="2"></td>
+		</tr>
+		
+		</table>
+		
+    	</div>
+		  	
+        <!-- END PAGE CONTENT -->
+
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>
