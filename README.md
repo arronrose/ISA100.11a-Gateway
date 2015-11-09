@@ -1,7 +1,4 @@
-Nivis-ISA100.11a-Gateway
-========================
+ISA100.11a - Gateway
+==========================
 
-Nivis ISA100.11a Gateway
-
-To help you find out more about Nivis ISA100.11a and WirelessHART Open Source technologies and to spread your ideas we created a dedicated forum. 
-You can find it on Nivis web page at http://www.nivis.com/forums
+This is an implementation of an ISA100 Wireless (a.k.a. ISA100.11a) "All-in-one" Gateway (System & Security Manager, Gateway, Backbone Router, and more), based on the Nivis-WirelessHart-Gateway open source project.
